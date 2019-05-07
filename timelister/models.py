@@ -10,7 +10,8 @@ class Jobber(models.Model):
     tittel = models.CharField(max_length=64, blank=True)
     adresse = models.CharField(max_length=256, blank=True)
     telefon_nr = models.CharField(max_length=64, blank=True)
-    beskrivelse = models.CharField(max_length=256, blank=True)
+    beskrivelse = models.TextField(blank=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     # TODO: Define fields here
 

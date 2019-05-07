@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+Jobber
+{% endblock head_title %}
+{% block content %}
+{{ jobbform.media }}
+{% load crispy_forms_tags %}
+{% include 'func/modals.html' %}
+
+
+<div class="col-lg-8">
+    {% include 'func/messages.html' %}
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h2 class="card-body">Jobber</h2>
+                </div>
+                <div class="p-2"><a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete"
+                        data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
+                        <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a></div>
+                <div class="p-2">
+                    <h3>{{ jobb.ordre_nr }}</h3>
+                </div>
+            </div>
+
+            <h1>{{ jobb }}</h1>
+        </div>
+    </div>
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h2 class="card-body">Edit Jobb</h2>
+                </div>
+                <div class="p-2"></div>
+                <div class="p-2">
+                    <h3>{{ jobb.ordre_nr }}</h3>
+                </div>
+            </div>
+
+            <form method="POST" action=".">
+                {% csrf_token %}
+                {{ editjobb|crispy }}
+                <button type="submit" class="btn btn-primary button-card">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- ###### sidebar ##### -->
+<div class="col-lg-4">
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow mb-4 d-none d-lg-block">
+        <div class="card-body">
+            <div class="form-group">
+                <h2>Fyll inn ny jobb:
+                </h2>
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    {{ jobbform|crispy }}
+                    <button type="submit" class="btn btn-primary button-card">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

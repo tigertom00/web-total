@@ -43,14 +43,6 @@ class JobberForm(forms.ModelForm):
         attrs={
             'placeholder': 'Adresse...',
         }))
-    telefon_nr = forms.CharField(max_length=64, required=False, widget=forms.TextInput(
-        attrs={
-            'placeholder': 'Telefon nr...',
-        }))
-    beskrivelse = forms.CharField(max_length=256, required=False, widget=forms.TextInput(
-        attrs={
-            'placeholder': 'Mer info...',
-        }))
 
     class Meta:
         """Meta definition for Jobberform."""
@@ -58,6 +50,33 @@ class JobberForm(forms.ModelForm):
         model = Jobber
         fields = (
             'ordre_nr',
+            'tittel',
+            'adresse',
+
+        )
+
+
+class EditJobbForm(forms.ModelForm):
+    """Form definition for EditJobb."""
+    tittel = forms.CharField(max_length=64, widget=forms.TextInput(
+        attrs={
+            'placeholder': '* Tittel...',
+        }))
+    adresse = forms.CharField(max_length=256, required=False, widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Adresse...',
+        }))
+    telefon_nr = forms.CharField(max_length=64, required=False, widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Telefon nr...',
+        }))
+    beskrivelse = forms.TextInput
+
+    class Meta:
+        """Meta definition for EditJobbform."""
+
+        model = Jobber
+        fields = (
             'tittel',
             'adresse',
             'telefon_nr',
