@@ -1,0 +1,5 @@
+{% if user.first_name == '' %}
+{{ user.username|title }}
+{% else %}
+{{ user.first_name|title }} {{ user.last_name|title }}
+{% endif %}

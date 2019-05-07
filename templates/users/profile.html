@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block head_title %}
+
+{% endblock head_title %}
+{% block content %}
+{% load crispy_forms_tags %}
+{% include 'func/modals.html' %}
+
+<div class="col-lg-8">
+    {% include 'func/messages.html' %}
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <h5 class="m-0">{{ user.username }}</h5>
+            <img src="{{ user.profile_picture.url }}" width="240">
+            <p>First Name: {{ user.first_name }}</p>
+            <p>Last Name: {{ user.last_name }}</p>
+            <p>E-Mail: {{ user.email }}</p>
+            <p>Website: {{ user.website }}</p>
+
+
+
+        </div>
+    </div>
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <h5 class="m-0">Lorem ipsum 3</h5>
+            <hr>
+            <ul class="mb-0">
+                <li>Responsive Bootstrap sidebar navigation</li>
+                <li>Optional top navigation bar with toggle button</li>
+                <li>Off-canvas navigation toggling on smaller screens</li>
+                <li>Responsive page content area</li>
+            </ul>
+        </div>
+    </div>
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="disqus-comments">
+                <h2>Lorem ipsum 4</h2>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam architecto
+                    magnam
+                    reprehenderit suscipit nisi vitae cupiditate omnis doloribus sapiente fugit a minus
+                    labore
+                    reiciendis accusantium inventore. Fuga? Lorem ipsum dolor sit amet consectetur
+                    adipisicing elit.
+                    Aliquid vel aliquam dicta obcaecati quod deleniti accusamus accusantium odio ipsam odit
+                    corrupti, ex
+                    molestiae aspernatur suscipit harum voluptatem dolorum velit sapiente?</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ###### sidebar ##### -->
+<div class="col-lg-4">
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow mb-4 d-none d-lg-block">
+        <div class="card-body">
+            <h2>Lorem ipsum 5</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat,
+                nam architecto
+                magnam
+                reprehenderit suscipit nisi vitae cupiditate omnis doloribus sapiente
+                fugit a minus
+                labore
+                reiciendis accusantium inventore. Fuga? Lorem ipsum dolor sit amet
+                consectetur
+                adipisicing elit.
+                Aliquid vel aliquam dicta obcaecati quod deleniti accusamus accusantium
+                odio ipsam odit
+                corrupti, ex
+                molestiae aspernatur suscipit harum voluptatem dolorum velit sapiente?
+            </p>
+        </div>
+    </div>
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow mb-4 text-center">
+        <div class="card-body">
+            <div class="small mb-2 font-weight-bold">
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            </div>
+            <h2>Lorem ipsum 6</h2>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam architecto
+                magnam
+                reprehenderit suscipit nisi vitae cupiditate omnis doloribus sapiente fugit a minus
+                labore
+                reiciendis accusantium inventore. Fuga? Lorem ipsum dolor sit amet consectetur
+                adipisicing elit.
+                Aliquid vel aliquam dicta obcaecati quod deleniti accusamus accusantium odio ipsam odit
+                corrupti, ex
+                molestiae aspernatur suscipit harum voluptatem dolorum velit sapiente?</p>
+        </div>
+    </div>
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between small">
+                <span class="font-weight-bold">License</span>
+                <span><i class="fal fa-balance-scale"></i> <a class="font-weight-bold"
+                        href="https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE">MIT
+                        License</a></span>
+            </div>
+            <hr class="my-2">
+            <div class="d-flex justify-content-between small">
+                <span class="font-weight-bold">Released</span>
+                <span>Sep 28, 2013</span>
+            </div>
+            <hr class="my-2">
+            <div class="d-flex justify-content-between small">
+                <span class="font-weight-bold">Bootstrap Version</span>
+                <span>4.2.1</span>
+            </div>
+            <hr class="my-2">
+            <div class="d-flex justify-content-between small">
+                <span class="font-weight-bold">Last Updated</span>
+                <span>Jan 31, 2019</span>
+            </div>
+            <hr class="my-2">
+            <div class="d-flex justify-content-between small">
+                <span class="font-weight-bold">Template Version</span>
+                <span>5.0.0</span>
+            </div>
+        </div>
+    </div>
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <h5 class="mb-0">Lorem ipsum 7</h5>
+            <p class="small mb-4">Try one of these premium Bootstrap themes!</p>
+            <div class="row">
+                <div class="col-6 mb-4">
+                    <div class="item-preview">
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 mb-4">
+                    <div class="item-preview">
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 mb-4">
+                    <div class="item-preview">
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 mb-4">
+                    <div class="item-preview">
+                        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut ex repellat, nam
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="btn btn-outline-primary btn-block">View
+                More Premium Content</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
