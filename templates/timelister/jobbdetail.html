@@ -15,17 +15,21 @@ Jobber
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div class="p-2">
-                    <h2 class="card-body">Jobber</h2>
+                    <h2 class="card-body">ordre nr:</h2>
                 </div>
-                <div class="p-2"><a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete"
-                        data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
-                        <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a></div>
                 <div class="p-2">
-                    <h3>{{ jobb.ordre_nr }}</h3>
+                    <h1>{{ jobb.ordre_nr }}</h1>
+                </div>
+                <div class="p-2">
+                    <a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete" data-toggle="modal"
+                        data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
+                        <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
                 </div>
             </div>
-
-            <h1>{{ jobb }}</h1>
+            <p>Tittel: {{ jobb }}</p>
+            <p>Adresse: {{ jobb.adresse }}</p>
+            <p>Telefon nr: {{ jobb.telefon_nr }}</p>
+            <p>beskrivelse: {{ jobb.beskrivelse }}</p>
         </div>
     </div>
     <div class="card border-0 shadow mb-4">
@@ -43,7 +47,7 @@ Jobber
             <form method="POST" action=".">
                 {% csrf_token %}
                 {{ editjobb|crispy }}
-                <button type="submit" class="btn btn-primary button-card">Submit</button>
+                <button type="submit" class="btn btn-primary button-main">Submit</button>
             </form>
         </div>
     </div>

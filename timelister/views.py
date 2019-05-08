@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.db.models import Sum
-from timelister.forms import TimelisteForm, JobberForm, MatriellForm, EditJobbForm
+from timelister.forms import TimelisteForm, JobberForm, EditJobbForm
 from timelister import models
 from datetime import datetime, timedelta
 
@@ -61,18 +61,6 @@ def new_jobb(request):
     }
 
     pass
-
-
-def new_matriell(request):
-    form = MatriellForm(request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            return redirect(reverse("new_matriell"))
-    context = {
-        'form': form
-    }
-    return render(request, 'timelister/new_matriell.html', context)
 
 
 def timeliste(request):
@@ -187,3 +175,11 @@ def jobberDelete(request, object_id):
     object.delete()
     messages.warning(request, 'Jobb deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+
+def matriellList(request):
+    matriell = models.Matriell.objects.all()
+    context = {
+        'matriell': matriell
+    }
+    return render(request, 'timelister/matiell-liste.html', context)

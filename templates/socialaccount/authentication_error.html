@@ -1,12 +1,16 @@
-{% extends "socialaccount/base.html" %}
+{% extends "account/base.html" %}
 
 {% load i18n %}
+{% load account socialaccount %}
 
 {% block head_title %}{% trans "Social Network Login Failure" %}{% endblock %}
 
 {% block content %}
-<div class="contpage">
-    <div class="container">
+{% load crispy_forms_tags %}
+{% include 'func/modals.html' %}
+<div class="container">
+    {% include 'func/messages.html' %}
+    <div class="jumbotron">
         <h1>{% trans "Social Network Login Failure" %}</h1>
 
         <p>{% trans "An error occurred while attempting to login via your social network account." %}</p>
