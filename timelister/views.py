@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.shortcuts import redirect, reverse, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.db.models import Sum
-from timelister.forms import TimelisteForm, JobberForm, EditJobbForm
+from timelister.forms import TimelisteForm, JobberForm, EditJobbForm, MatriellForm
 from timelister import models
 from datetime import datetime, timedelta
 
@@ -179,7 +179,55 @@ def jobberDelete(request, object_id):
 
 def matriellList(request):
     matriell = models.Matriell.objects.all()
+    matriellform = MatriellForm(request.POST or None)
+    if request.method == "POST":
+        if matriellform.is_valid():
+            matriellform.save()
+            messages.success(request, 'Matriell Lagt til')
+            return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
     context = {
-        'matriell': matriell
+        'matriell': matriell,
+        'matriellform': matriellform
     }
     return render(request, 'timelister/matiell-liste.html', context)
+
+
+def matriellDetail(request, object_id):
+    matriell = get_object_or_404(models.Matriell, pk=object_id)
+
+    context = {
+        'matriell': matriell,
+    }
+
+    return render(request, 'timelister/matriell-detail.html', context)
+
+
+def matriellDelete(request, object_id):
+    object = get_object_or_404(models.Matriell, pk=object_id)
+    object.delete()
+    messages.warning(request, 'Matriell deleted.')
+    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+
+def add_matriell(request, pk):
+    matriell = get_object_or_404(models.Matriell, pk=pk)
+    jobb = get_object_or_404(models.Jobber, pk=pk)
+
+    jobb_matriell = models.JobbMatriell.objects.get_or_create(
+        matriell=matriell,
+        jobb=jobb.pk,
+        ferdig=False)
+    jobb_qs = models.Jobber.objects.filter(pk=jobb.pk, ferdig=False)
+    if jobb_qs.exsists():
+        jobb = jobb_qs[0]
+        if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
+            jobb_matriell.antall += 1
+            jobb_matriell.save()
+        else:
+            jobb.matriell.add(jobb_matriell)
+    else:
+        jobb = models.Jobber.objects.create(pk=pk)
+        jobb.matriell.add(jobb_matriell)
+    return redirect('matriell-detail', kwargs={
+        'pk': models.Matriell.instance.id
+    })

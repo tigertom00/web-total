@@ -15,12 +15,12 @@ Timelister
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div class="p-2">
-                    <h2 class="card-body">Timer for {% now 'F Y' %}</h2>
+                    <h2 class="card-body">Matriell:</h2>
                 </div>
                 <div class="p-2"></div>
                 <div class="p-2">
                     <h3>
-                        {% include 'func/name.html' %}
+
                     </h3>
                 </div>
             </div>
@@ -38,10 +38,10 @@ Timelister
                     {% for mat in matriell %}
                     <tr>
                         <th scope="row">{{ mat.el_nr }}</th>
-                        <td>{{ mat }}</td>
+                        <td><a href="{% url 'matriell-detail' object_id=mat.pk %}">{{ mat }}</a></td>
                         <td>{{ mat.leverandor }}</td>
-                        <td><a href="#" class="confirm-delete" data-toggle="modal"
-                                data-target="#confirmTimerDeleteModal" id="deleteButton{{timer.id}}">
+                        <td><a href="{% url 'delete_matriell' object_id=mat.id %}" class="confirm-delete"
+                                data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{mat.id}}">
                                 <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
                         </td>
                     </tr>
@@ -59,11 +59,11 @@ Timelister
     <div class="card border-0 shadow mb-4 d-none d-lg-block">
         <div class="card-body">
             <div class="form-group">
-                <h2>Skriv Timer for<br>
+                <h2>Registrer nytt matriell<br>
                 </h2>
                 <form method="POST" action=".">
                     {% csrf_token %}
-
+                    {{ matriellform|crispy }}
                     <button type="submit" class="btn btn-primary button-card">Submit</button>
                 </form>
             </div>

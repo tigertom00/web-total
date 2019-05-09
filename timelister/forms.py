@@ -1,5 +1,5 @@
 from django import forms
-from .models import Timeliste, Jobber
+from .models import Timeliste, Jobber, Matriell
 from flatpickr import DatePickerInput
 import datetime
 
@@ -84,17 +84,30 @@ class EditJobbForm(forms.ModelForm):
         )
 
 
-# class JobbMatriellForm(forms.ModelForm):
-#     """Form definition for JobbMatriell."""
+class MatriellForm(forms.ModelForm):
+    """Form definition for Matriell."""
+    el_nr = forms.CharField(max_length=7, widget=forms.TextInput(
+        attrs={
+            'placeholder': 'El nr...',
+        }))
+    tittel = forms.CharField(max_length=64, widget=forms.TextInput(
+        attrs={
+            'placeholder': '* Tittel...',
+        }))
 
-#     class Meta:
-#         """Meta definition for JobbMatriellform."""
+    info = forms.CharField(max_length=256, required=False, widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Mer info...',
+        }))
 
-#         model = JobbMatriell
+    class Meta:
+        """Meta definition for Matriellform."""
 
-#         fields = (
-#             'el_nr',
-#             'jobb',
-#             'Leverandor',
-#             'beskrivelse',
-#         )
+        model = Matriell
+
+        fields = (
+            'el_nr',
+            'tittel',
+            'leverandor',
+            'info',
+        )
