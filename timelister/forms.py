@@ -1,9 +1,22 @@
 from django import forms
 from .models import Timeliste, Jobber, Matriell
 from flatpickr import DatePickerInput
+from bootstrap_modal_forms.forms import BSModalForm
 import datetime
 
 datenow = datetime.datetime.now()
+
+
+class ModalTimerForm(BSModalForm):
+
+    class Meta:
+
+        model = Timeliste
+        fields = (
+            'jobb',
+            'dato',
+            'timer',
+        )
 
 
 class TimelisteForm(forms.ModelForm):

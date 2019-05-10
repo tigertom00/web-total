@@ -1,14 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from django.shortcuts import redirect, reverse, get_object_or_404
+from django.shortcuts import redirect, reverse, get_object_or_404, render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.db.models import Sum
-from timelister.forms import TimelisteForm, JobberForm, EditJobbForm, MatriellForm
+from timelister.forms import TimelisteForm, JobberForm, EditJobbForm, MatriellForm, ModalTimerForm
 from timelister import models
 from datetime import datetime, timedelta
-
+from bootstrap_modal_forms.generic import BSModalCreateView
+from django.urls import reverse_lazy
 
 User = get_user_model()
 today = datetime.now()
@@ -144,8 +144,9 @@ def jobblist(request):
     return render(request, 'timelister/jobblist.html', context)
 
 
-def jobbdetail(request, object_id):
-    jobb = get_object_or_404(models.Jobber, pk=object_id)
+def jobbdetail(request, jobb_id):
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    matriell = models.Matriell.objects.all()
     editjobb = EditJobbForm(request.POST or None, instance=jobb)
     jobbform = JobberForm(request.POST or None)
     if request.method == "POST":
@@ -153,19 +154,20 @@ def jobbdetail(request, object_id):
             jobbform.save()
             messages.success(request, 'Jobb Lagt til')
             return redirect(reverse("jobbdetail", kwargs={
-                'object_id': jobbform.instance.ordre_nr
+                'jobb_id': jobbform.instance.ordre_nr
             }))
         elif editjobb.is_valid():
             editjobb.save()
             messages.success(request, 'Jobb oppdatert')
             return redirect(reverse("jobbdetail", kwargs={
-                'object_id': editjobb.instance.ordre_nr
+                'jobb_id': editjobb.instance.ordre_nr
             }))
 
     context = {
         'jobb': jobb,
         'jobbform': jobbform,
         'editjobb': editjobb,
+        'matriell': matriell,
     }
     return render(request, 'timelister/jobbdetail.html', context)
 
@@ -209,25 +211,24 @@ def matriellDelete(request, object_id):
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
 
-def add_matriell(request, pk):
-    matriell = get_object_or_404(models.Matriell, pk=pk)
-    jobb = get_object_or_404(models.Jobber, pk=pk)
-
-    jobb_matriell = models.JobbMatriell.objects.get_or_create(
+def add_matriell(request, object_id, jobb_id):
+    matriell = get_object_or_404(models.Matriell, pk=object_id)
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    jobb_matriell, created = models.JobbMatriell.objects.get_or_create(
         matriell=matriell,
-        jobb=jobb.pk,
-        ferdig=False)
-    jobb_qs = models.Jobber.objects.filter(pk=jobb.pk, ferdig=False)
-    if jobb_qs.exsists():
-        jobb = jobb_qs[0]
-        if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
-            jobb_matriell.antall += 1
-            jobb_matriell.save()
-        else:
-            jobb.matriell.add(jobb_matriell)
+        jobb=jobb,
+        transf=False)
+    if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
+        jobb_matriell.antall += 1
+        jobb_matriell.save()
     else:
-        jobb = models.Jobber.objects.create(pk=pk)
         jobb.matriell.add(jobb_matriell)
-    return redirect('matriell-detail', kwargs={
-        'pk': models.Matriell.instance.id
-    })
+
+    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+
+class ModalTimerView(BSModalCreateView):
+    template_name = 'func/modal_timer_form.html'
+    form_class = ModalTimerForm
+    success_message = 'Timer lagt til.'
+    success_url = reverse_lazy('timeliste')

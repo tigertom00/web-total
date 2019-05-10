@@ -30,8 +30,52 @@ Jobber
             <p>Adresse: {{ jobb.adresse }}</p>
             <p>Telefon nr: {{ jobb.telefon_nr }}</p>
             <p>beskrivelse: {{ jobb.beskrivelse }}</p>
+            <p>Matriell:<br>
+                {% for mat in jobb.matriell.all %}
+                {{ mat.antall }} {{ mat }}<br>
+                {% endfor %}
+            </p>
         </div>
     </div>
+
+    <div class="card border-0 shadow mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h2 class="card-body">Matriell liste</h2>
+                </div>
+                <div class="p-2"></div>
+                <div class="p-2">
+                    <h3></h3>
+                </div>
+            </div>
+            <table class="table table-striped table-borderless">
+                <thead class="thead-custom">
+                    <tr>
+                        <th scope="col">Elnr</th>
+                        <th scope="col">Tittel</th>
+                        <th scope="col">Leverandør</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mat in matriell %}
+                    <tr>
+                        <th scope="row">{{ mat.el_nr }}</th>
+                        <td><a href="{% url 'add-matriell' object_id=mat.pk jobb_id=jobb.pk %}">{{ mat }}</a></td>
+                        <td>{{ mat.leverandor }}</td>
+                        <td><a href="{% url 'delete_matriell' object_id=mat.id %}" class="confirm-delete"
+                                data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{mat.id}}">
+                                <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="card border-0 shadow mb-4">
         <div class="card-body">
             <div class="d-flex justify-content-between">

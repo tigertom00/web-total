@@ -24,10 +24,11 @@ class Leverandorer(models.Model):
 
 class Matriell(models.Model):
     """Model definition for Matriell."""
-    el_nr = el_nr = models.IntegerField(blank=True, null=True,)
-    tittel = models.CharField(max_length=64, blank=True)
+    el_nr = models.IntegerField(unique=True, blank=True, null=True,)
+    tittel = models.CharField(max_length=64, unique=True, blank=True)
     info = models.CharField(max_length=256, blank=True)
-    leverandor = models.ForeignKey(Leverandorer, on_delete=models.CASCADE)
+    leverandor = models.ForeignKey(
+        Leverandorer, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField()
     # TODO: Define fields here
 
@@ -49,7 +50,8 @@ class JobbMatriell(models.Model):
     """Model definition for Matriell."""
     matriell = models.ForeignKey(Matriell, on_delete=models.CASCADE)
     antall = models.IntegerField(default=1)
-    ferdig = models.BooleanField(default=False)
+    jobb = models.ForeignKey('Jobber', on_delete=models.CASCADE)
+    transf = models.BooleanField(default=False)
 
     # TODO: Define fields here
 
@@ -67,7 +69,7 @@ class JobbMatriell(models.Model):
 class Jobber(models.Model):
     """Model definition for Jobber."""
     ordre_nr = models.PositiveSmallIntegerField(primary_key=True)
-    tittel = models.CharField(max_length=64, blank=True)
+    tittel = models.CharField(max_length=64, unique=True, blank=True)
     adresse = models.CharField(max_length=256, blank=True)
     telefon_nr = models.CharField(max_length=64, blank=True)
     beskrivelse = models.TextField(blank=True)

@@ -17,7 +17,18 @@ Timelister
                 <div class="p-2">
                     <h2 class="card-body">Timer for {% now 'F Y' %}</h2>
                 </div>
-                <div class="p-2"></div>
+
+                <div class="p-2">
+                    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="modal-timer btn btn-primary" type="button" name="button">Create
+                        Book</button>
+
+                </div>
                 <div class="p-2">
                     <h3>
                         {% include 'func/name.html' %}

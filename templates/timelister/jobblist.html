@@ -38,7 +38,7 @@ Jobber
                     <tr>
                         <th scope="row">{{ jobber.ordre_nr }}</th>
 
-                        <td><a href="{% url 'jobbdetail' object_id=jobber.ordre_nr %}">{{ jobber }}</a></td>
+                        <td><a href="{% url 'jobbdetail' jobb_id=jobber.ordre_nr %}">{{ jobber }}</a></td>
 
                         <td>{{ jobber.adresse }}</td>
                         <td>{{ jobber.telefon_nr }}</td>
