@@ -43,6 +43,30 @@
     -webkit-transform: translateX(-0%);
 }
 
+.jumbotron h2 {
+    font-weight: 500;
+    font-size: 35px;
+    text-align: left;
+    position: relative;
+    padding: 0px 0 5px;
+    margin-bottom: 10px;
+}
+
+.jumbotron h2::after {
+    background: #B58900;
+    width: 175px;
+    height: 2px;
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    transform: translateX(-0%);
+    -o-transform: translateX(-0%);
+    -ms-transform: translateX(-0%);
+    -moz-transform: translateX(-0%);
+    -webkit-transform: translateX(-0%);
+}
+
 .thead-custom th {
     background-color: #073642;
 }

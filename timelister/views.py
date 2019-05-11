@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, reverse, get_object_or_404, render
+from django.http import HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
@@ -15,6 +16,8 @@ today = datetime.now()
 firstday = today.replace(day=1)
 redirect_if_referer_not_found = '/'
 
+# Not in use
+
 
 def new_timeliste(request):
 
@@ -30,6 +33,8 @@ def new_timeliste(request):
     }
 
     return render(request, 'timelister/new_timeliste.html', context)
+
+# NOT IN USE
 
 
 def new_jobb(request):
@@ -62,6 +67,10 @@ def new_jobb(request):
 
     pass
 
+# Timelister #
+
+# Timeliste Current month List View
+
 
 def timeliste(request):
     current_month = datetime.now().month
@@ -83,6 +92,8 @@ def timeliste(request):
         'this_month_timer': this_month_timer,
     }
     return render(request, 'timelister/timeliste.html', context)
+
+# Timeliste Last Month List View
 
 
 def timelisteLastmonth(request):
@@ -107,6 +118,8 @@ def timelisteLastmonth(request):
 
     return render(request, 'timelister/timeliste_lastmonth.html', context)
 
+# Delete Timer
+
 
 def timerDelete(request, object_id):
     object = get_object_or_404(models.Timeliste, pk=object_id)
@@ -114,9 +127,12 @@ def timerDelete(request, object_id):
     messages.warning(request, 'Timer deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
+# Jobber #
+
+# Jobb List View
+
 
 def jobblist(request):
-
     jobb_list = models.Jobber.objects.all()
     most_recent = models.Jobber.objects.order_by('-date')
     paginator = Paginator(jobb_list, 10)
@@ -143,6 +159,8 @@ def jobblist(request):
     }
     return render(request, 'timelister/jobblist.html', context)
 
+
+# Jobb Detail View
 
 def jobbdetail(request, jobb_id):
     jobb = get_object_or_404(models.Jobber, pk=jobb_id)
@@ -171,12 +189,46 @@ def jobbdetail(request, jobb_id):
     }
     return render(request, 'timelister/jobbdetail.html', context)
 
+# Delete Jobber
+
 
 def jobberDelete(request, object_id):
     object = get_object_or_404(models.Jobber, pk=object_id)
     object.delete()
     messages.warning(request, 'Jobb deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+# Add Matriell To Jobber
+
+
+def jobbMatriell(request, jobb_id):
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    # jobb_matriell = get_object_or_404(
+    #     models.Jobber, pk=jobb_id)objects.filter(matriell__transf=False)
+    jobb_matriell = models.Jobber.objects.get(
+        pk=jobb_id)
+    # jobb_matriell = jobb_matriell.objects.filter(matriell__transf=False)
+
+    # try:
+    #     jobb_matriell_transf = models.Jobber.objects.get(
+    #         pk=jobb_id, matriell__transf=True)
+    # except:
+    #     jobb_matriell_transf = 10
+
+    matriell = models.Matriell.objects.all()
+    print(jobb_matriell.matriell.filter(transf=False))
+    context = {
+        'matriell': matriell,
+        'jobb': jobb,
+        'jobb_matriell': jobb_matriell,
+        # 'jobb_matriell_transf': jobb_matriell_transf,
+
+    }
+    return render(request, 'timelister/jobb_matriell.html', context)
+
+# Matriell #
+
+# Matriell List View
 
 
 def matriellList(request):
@@ -193,6 +245,8 @@ def matriellList(request):
     }
     return render(request, 'timelister/matiell-liste.html', context)
 
+# Matriell Detail View
+
 
 def matriellDetail(request, object_id):
     matriell = get_object_or_404(models.Matriell, pk=object_id)
@@ -203,6 +257,8 @@ def matriellDetail(request, object_id):
 
     return render(request, 'timelister/matriell-detail.html', context)
 
+# Delete Matriell
+
 
 def matriellDelete(request, object_id):
     object = get_object_or_404(models.Matriell, pk=object_id)
@@ -211,20 +267,78 @@ def matriellDelete(request, object_id):
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
 
-def add_matriell(request, object_id, jobb_id):
+# Add Matriell to jobb
+
+def add_matriell(request, object_id, jobb_id, antall):
     matriell = get_object_or_404(models.Matriell, pk=object_id)
     jobb = get_object_or_404(models.Jobber, pk=jobb_id)
     jobb_matriell, created = models.JobbMatriell.objects.get_or_create(
         matriell=matriell,
         jobb=jobb,
         transf=False)
+    print(created)
     if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
-        jobb_matriell.antall += 1
+        jobb_matriell.antall += int(antall)
         jobb_matriell.save()
-    else:
-        jobb.matriell.add(jobb_matriell)
+        if created:
+            jobb.matriell.add(jobb_matriell)
 
+    else:
+        print('Adder ny jobbmatriell')
+        jobb.matriell.add(jobb_matriell)
+        jobb_matriell.antall += int(antall)-1
+        jobb_matriell.save()
+    messages.success(request, 'Matriell Lagt til')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+# Delete Matriell from Jobb
+
+
+def delete_matriell(request, object_id, jobb_id, antall):
+    matriell = get_object_or_404(models.Matriell, pk=object_id)
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    jobb_matriell = models.JobbMatriell.objects.get(
+        matriell=matriell,
+        jobb=jobb,
+        transf=False)
+    if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
+        if jobb_matriell.antall >= 2:
+            jobb_matriell.antall += int(antall)
+            jobb_matriell.save()
+            if jobb_matriell.antall <= 0:
+                jobb.matriell.remove(jobb_matriell)
+                jobb_matriell.delete()
+
+        else:
+            jobb.matriell.remove(jobb_matriell)
+            jobb_matriell.delete()
+        messages.warning(request, 'Matriell deleted.')
+    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+# Set Matriell to transfered on jobb
+
+
+def transf_matriell(request, object_id, jobb_id, transf):
+    matriell = get_object_or_404(models.Matriell, pk=object_id)
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+
+    jobb_matriell = models.JobbMatriell.objects.get(
+        matriell=matriell,
+        jobb=jobb)
+    if jobb.matriell.filter(matriell__pk=matriell.pk).exists():
+        print(transf)
+        if transf == '50':
+            if jobb_matriell.transf:
+                messages.warning(request, 'Alerede Overført.')
+            else:
+
+                jobb_matriell.transf = True
+                jobb_matriell.save()
+
+                messages.info(request, 'Matriell Overført.')
+    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+# Modal Timer Form, from django-bootstrap-modal-forms==1.4.2
 
 
 class ModalTimerView(BSModalCreateView):

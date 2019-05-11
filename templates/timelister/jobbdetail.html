@@ -9,111 +9,102 @@ Jobber
 {% include 'func/modals.html' %}
 
 
-<div class="col-lg-8">
+<div class="container">
     {% include 'func/messages.html' %}
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body">ordre nr:</h2>
-                </div>
-                <div class="p-2">
-                    <h1>{{ jobb.ordre_nr }}</h1>
-                </div>
-                <div class="p-2">
-                    <a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete" data-toggle="modal"
-                        data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
-                        <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+    <div class="jumbotron">
+
+        <div class="d-flex justify-content-between ">
+            <div class="p-2">
+                <h2 class="jumbotron">{{ jobb|title }}</h2>
+            </div>
+
+            <div class="p-2">
+                <h3>{{ jobb.ordre_nr }}</h3>
+            </div>
+            <div class="p-2"><a class="btn btn-success btn-small" href="#" role="button">+
+                    Timer</a></div>
+            <div class="p-2">
+
+                <a class="btn btn-info btn-small" href="{% url 'jobb-matriell' jobb.ordre_nr %}" role="button">+/-
+                    Matriell</a>
+
+            </div>
+        </div>
+        <a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete" data-toggle="modal"
+            data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
+            <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+
+                <p>Adresse: {{ jobb.adresse }}</p>
+                <p>Telefon nr: {{ jobb.telefon_nr }}</p>
+                <p>beskrivelse: {{ jobb.beskrivelse }}</p>
+            </div>
+            <div class="p-2">hallo</div>
+
+            <div class="p-2">
+                <div class="card mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Timer:</div>
+                    <div class="card-body">
+                        <table class="table table-striped table-borderless">
+                            <tbody>
+                                {% for mat in jobb.matriell.all %}
+                                <tr>
+                                    <td>{{ mat }}</td>
+                                    <td><b>{{ mat.antall }}</b></td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-            <p>Tittel: {{ jobb }}</p>
-            <p>Adresse: {{ jobb.adresse }}</p>
-            <p>Telefon nr: {{ jobb.telefon_nr }}</p>
-            <p>beskrivelse: {{ jobb.beskrivelse }}</p>
-            <p>Matriell:<br>
-                {% for mat in jobb.matriell.all %}
-                {{ mat.antall }} {{ mat }}<br>
-                {% endfor %}
-            </p>
+            <div class="p-2">
+                <div class="card mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Matriell:</div>
+                    <div class="card-body">
+                        <table class="table table-striped table-borderless">
+                            <tbody>
+                                {% for mat in jobb.matriell.all %}
+                                <tr>
+                                    <td>{{ mat }}</td>
+                                    <td><b>{{ mat.antall }}</b></td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body">Matriell liste</h2>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2">
-                    <h3></h3>
-                </div>
-            </div>
-            <table class="table table-striped table-borderless">
-                <thead class="thead-custom">
-                    <tr>
-                        <th scope="col">Elnr</th>
-                        <th scope="col">Tittel</th>
-                        <th scope="col">Leverandør</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for mat in matriell %}
-                    <tr>
-                        <th scope="row">{{ mat.el_nr }}</th>
-                        <td><a href="{% url 'add-matriell' object_id=mat.pk jobb_id=jobb.pk %}">{{ mat }}</a></td>
-                        <td>{{ mat.leverandor }}</td>
-                        <td><a href="{% url 'delete_matriell' object_id=mat.id %}" class="confirm-delete"
-                                data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{mat.id}}">
-                                <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-                    </tr>
-                    {% endfor %}
 
-                </tbody>
-            </table>
+
+    <div class="jumbotron">
+
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+                <h2 class="card-body">Edit Jobb</h2>
+            </div>
+            <div class="p-2"></div>
+            <div class="p-2">
+                <h3>{{ jobb.ordre_nr }}</h3>
+            </div>
         </div>
+
+        <form method="POST" action=".">
+            {% csrf_token %}
+            {{ editjobb|crispy }}
+            <button type="submit" class="btn btn-primary button-main">Submit</button>
+        </form>
     </div>
 
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body">Edit Jobb</h2>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2">
-                    <h3>{{ jobb.ordre_nr }}</h3>
-                </div>
-            </div>
-
-            <form method="POST" action=".">
-                {% csrf_token %}
-                {{ editjobb|crispy }}
-                <button type="submit" class="btn btn-primary button-main">Submit</button>
-            </form>
-        </div>
-    </div>
 
 </div>
-<!-- ###### sidebar ##### -->
-<div class="col-lg-4">
-    <!-- ### Sidebox ### -->
-    <div class="card border-0 shadow mb-4 d-none d-lg-block">
-        <div class="card-body">
-            <div class="form-group">
-                <h2>Fyll inn ny jobb:
-                </h2>
-                <form method="POST" action=".">
-                    {% csrf_token %}
-                    {{ jobbform|crispy }}
-                    <button type="submit" class="btn btn-primary button-card">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
 
-</div>
+
 
 {% endblock content %}
