@@ -6,6 +6,7 @@ Jobber
 {% block content %}
 {{ jobbform.media }}
 {% load crispy_forms_tags %}
+{% load customtags %}
 {% include 'func/modals.html' %}
 
 
@@ -33,6 +34,7 @@ Jobber
         <a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete" data-toggle="modal"
             data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
             <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+
         <div class="d-flex justify-content-between">
             <div class="p-2">
 
@@ -40,45 +42,90 @@ Jobber
                 <p>Telefon nr: {{ jobb.telefon_nr }}</p>
                 <p>beskrivelse: {{ jobb.beskrivelse }}</p>
             </div>
-            <div class="p-2">hallo</div>
-
             <div class="p-2">
-                <div class="card mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Timer:</div>
-                    <div class="card-body">
-                        <table class="table table-striped table-borderless">
-                            <tbody>
-                                {% for mat in jobb.matriell.all %}
-                                <tr>
-                                    <td>{{ mat }}</td>
-                                    <td><b>{{ mat.antall }}</b></td>
-                                </tr>
-                                {% endfor %}
+                <div class="d-flex justify-content-end ">
+                    <div class="p-2">
+                        <div class="card mb-3 border-0" style="max-width: 20rem;">
+                            <div class="card-header">Timer på jobben:</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-borderless">
+                                    <thead class="thead-custom">
+                                        <tr>
+                                            <th scope="col">Brukernavn</th>
+                                            <th scope="col">Timer</th>
 
-                            </tbody>
-                        </table>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            {% regroup timer by user.username as username_list %}
+                                            {% for username in username_list %}
+                                            <td>
+                                                {{ username.grouper }}
+                                            </td>
+                                            {% for user in username.list %}
+                                            {% endfor %}
+                                            <td>
+                                                {{ username.list | running_total }}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td>Total</td>
+                                            <td>
+                                                {{ total_timer_jobb.timer__sum }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="p-2">
-                <div class="card mb-3" style="max-width: 20rem;">
-                    <div class="card-header">Matriell:</div>
-                    <div class="card-body">
-                        <table class="table table-striped table-borderless">
-                            <tbody>
-                                {% for mat in jobb.matriell.all %}
-                                <tr>
-                                    <td>{{ mat }}</td>
-                                    <td><b>{{ mat.antall }}</b></td>
-                                </tr>
-                                {% endfor %}
+                    <div class="p-2">
+                        <div class="card mb-3" style="max-width: 20rem;">
+                            <div class="card-header">Matriell på jobben:</div>
+                            <div class="card-body">
+                                <table class="table table-striped table-borderless">
+                                    <thead class="thead-custom">
+                                        <tr>
+                                            <th scope="col">Navn</th>
+                                            <th scope="col">Antall</th>
+                                            <th scope="col">Slett</th>
 
-                            </tbody>
-                        </table>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for mat in jobb.matriell.all %}
+                                        {% if not mat.transf %}
+                                        <tr>
+                                            <td>{{ mat }}</td>
+                                            <td><b>{{ mat.antall }}</b></td>
+                                            <td><a
+                                                    href="{% url 'transf-matriell' object_id=mat.matriell.pk jobb_id=jobb.pk transf=50 %}"><span
+                                                        class="badge badge-warning">Overfør</span></a></td>
+
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="d-flex flex-row-reverse">
+            <div class="p-2"><a class="btn btn-primary btn-sm" href="#" role="button">Overført Matriell</a></div>
+            <div class="p-2"></div>
+            <div class="p-2"></div>
+        </div>
+
     </div>
 
 
