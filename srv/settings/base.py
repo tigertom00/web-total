@@ -16,7 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.humanize',
     'users',
+    'jobb',
     'timelister',
+    'matriell',
     'members',
 
     'allauth',

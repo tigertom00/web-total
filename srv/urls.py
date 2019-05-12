@@ -11,7 +11,9 @@ urlpatterns = [
     re_path(r'^$', views.root, name='root'),
     path('accounts/', include('allauth.urls')),
     path('users/', include('users.urls')),
+    path('jobb/', include('jobb.urls')),
     path('timelister/', include('timelister.urls')),
+    path('matriell/', include('matriell.urls')),
     path('members/', include('members.urls')),
 
 ]

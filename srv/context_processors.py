@@ -1,6 +1,5 @@
 from allauth.account.forms import LoginForm
 from django.shortcuts import redirect, reverse
-from timelister.forms import JobberForm, TimelisteForm
 
 
 def custom_context(request):
