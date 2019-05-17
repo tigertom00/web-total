@@ -8,13 +8,15 @@ from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^$', views.root, name='root'),
+    path('', views.root, name='root'),
+    path('messages/', include('postman.urls', namespace='postman')),
     path('accounts/', include('allauth.urls')),
     path('users/', include('users.urls')),
     path('jobb/', include('jobb.urls')),
     path('timelister/', include('timelister.urls')),
     path('matriell/', include('matriell.urls')),
     path('members/', include('members.urls')),
+    path('testing/', include('testing.urls')),
 
 ]
 

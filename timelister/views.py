@@ -82,7 +82,6 @@ def timeliste(request):
         dato__month=current_month).filter(user=request.user).order_by('dato')
     total_timer = this_month_timer.aggregate(Sum('timer'))
     timeform = TimelisteForm(request.POST or None)
-    print(this_month_timer)
     if request.method == "POST":
         if timeform.is_valid():
             timeform.instance.user = request.user

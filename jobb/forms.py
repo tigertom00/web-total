@@ -1,5 +1,5 @@
 from django import forms
-from .models import Jobber
+from .models import Jobber, JobbImage
 
 
 class JobberForm(forms.ModelForm):
@@ -54,4 +54,15 @@ class EditJobbForm(forms.ModelForm):
             'adresse',
             'telefon_nr',
             'beskrivelse',
+            'profile_picture',
         )
+
+
+class JobbImageForm(forms.ModelForm):
+    """Form definition for JobbImage."""
+
+    class Meta:
+        """Meta definition for JobbImageform."""
+
+        model = JobbImage
+        fields = ("jobb", 'image')

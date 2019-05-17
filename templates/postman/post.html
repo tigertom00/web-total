@@ -1,0 +1,14 @@
+{% load i18n static %}{% load postman_tags %}
+<ul id="postman_menu" class="list-group list-group-flush">{% postman_unread as unread_count %}
+    <li class="list-group-item"><a href="{% url 'postman:inbox' %}"><i
+                class="fas fa-inbox"></i>&nbsp;{% trans "Inbox" %}{% if unread_count %}
+            <strong>({{ unread_count }})</strong>{% endif %}</a></li>
+    <li class="list-group-item"><a href="{% url 'postman:sent' %}"><i
+                class="fas fa-share-square"></i>&nbsp;{% trans "Sent Messages" %}</a></li>
+    <li class="list-group-item"><a href="{% url 'postman:write' %}"><i
+                class="fas fa-edit"></i>&nbsp;{% trans "Write" %}</a></li>
+    <li class="list-group-item"><a href="{% url 'postman:archives' %}"><i
+                class="fas fa-archive"></i>&nbsp;{% trans "Archives" %}</a></li>
+    <li class="list-group-item"><a href="{% url 'postman:trash' %}"><i
+                class="fas fa-trash-alt"></i>&nbsp;{% trans "Trash" %}</a></li>
+</ul>

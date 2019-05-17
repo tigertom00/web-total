@@ -37,6 +37,8 @@ class Jobber(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     ferdig = models.BooleanField(default=False)
     matriell = models.ManyToManyField(JobbMatriell, blank=True)
+    profile_picture = models.ImageField(
+        upload_to='jobb_profile_image', default='default/jobb_profile.png')
 
     # TODO: Define fields here
     # Koble til timer og matriell
@@ -49,3 +51,26 @@ class Jobber(models.Model):
     def __str__(self):
         """Unicode representation of Jobber."""
         return self.tittel
+
+
+def get_jobb_image_filename(instance, filename):
+    jobb_id = instance.jobb.pk
+    return "post_images/%s" % (jobb_id/filename)
+
+
+class JobbImage(models.Model):
+    """Model definition for Jobb_images."""
+    jobb = models.ForeignKey(Jobber, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='jobbimages',
+                              verbose_name='Image')
+    # TODO: Define fields here
+
+    class Meta:
+        """Meta definition for JobbImage."""
+
+        verbose_name = 'JobbImage'
+        verbose_name_plural = 'JobbImages'
+
+    def __str__(self):
+        """Unicode representation of JobbImage."""
+        return self.jobb.tittel

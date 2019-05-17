@@ -1,6 +1,8 @@
     {% load i18n %}
     {% load account socialaccount %}
     {% load static %}
+    {% load i18n static %}
+    {% load postman_tags %}
     {% load crispy_forms_tags %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -74,6 +76,15 @@
                 </ul>
             </div>
             <ul class="nav navbar-nav navbar-right">
+                {% postman_unread as unread_count %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'postman:inbox' %}">
+                        <i class="fas fa-envelope"></i>&nbsp;&nbsp;{% trans "Inbox" %}
+                        {% if unread_count %}
+                        <strong>({{ unread_count }})</strong></i>
+                        {% endif %}
+                    </a>
+                </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="#">

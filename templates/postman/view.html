@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load i18n %}{% load postman_tags %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+  {% include 'func/messages.html' %}
+
+
+  <div class="jumbotron">
+    <h2 class="jumbotron">
+      {% if pm_messages|length > 1 %}{% trans "Conversation" %}{% else %}{% trans "Message" %}{% endif %}</h2>
+    <div class="d-flex justify-content-between">
+      <div class="p-2">
+        {% include 'postman/post.html' %}
+      </div>
+      <div class="p-2">
+        {% for message in pm_messages %}
+        <div
+          class="pm_message{% if message.is_pending %} pm_pending{% endif %}{% if message.is_rejected %} pm_rejected{% endif %}{% if message.sender == user and message.sender_archived or message.recipient == user and message.recipient_archived %} pm_archived{% endif %}{% if message.sender == user and message.sender_deleted_at or message.recipient == user and message.recipient_deleted_at %} pm_deleted{% endif %}{% if message.recipient == user and not message.read_at %} pm_unread{% endif %}">
+          <table class="table table-striped table-borderless">
+            <thead class="thead-postman">
+              <tr>
+
+                <th scope="col">Fra</th>
+                <th scope="col">Til</th>
+                <th scope="col">Dato</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <div class="pm_header">
+
+                  <th>
+                    <span class="pm_sender">{{ message.obfuscated_sender|or_me:user }}</span> </th>
+                  <th><span class="pm_recipient">{{ message.obfuscated_recipient|or_me:user }}</span></th>
+                  <th><span class="pm_date">{{ message.sent_at|date:"DATETIME_FORMAT"}}</span></th>
+
+                  {% if message.is_rejected %} <div class="pm_status">
+                    {% trans "Rejected" %}{% if message.moderation_reason %}{% trans ":" %}
+                    {{ message.moderation_reason }}{% endif %}</div>{% endif %}
+                </div>
+              </tr>
+            </tbody>
+          </table>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+
+              <h5 class="mb-1"><span class="pm_subject">{{ message.subject }}</span></h5><br>
+              <div class="pm_body">
+                <p class="mb-1">{{ message.body|linebreaksbr }}</p><br>
+              </div>
+
+            </a>
+
+          </div>
+        </div>
+
+
+        {% if forloop.last %}
+        <form action="" method="post">{% csrf_token %}
+          <div class="d-flex justify-content-end">
+            <input type="hidden" {% if pm_messages|length > 1 and message.thread_id %}name="tpks"
+              value="{{ message.thread_id }}" {% else %}name="pks" value="{{ message.pk }}" {% endif %} />
+            <div class="p-2">
+              <a href="{{ next_url }}" class="btn btn-sm btn-primary">{% trans "Back" %}</a>
+            </div>
+
+            <div class="p-2">
+
+              <button type="submit" class="btn btn-sm btn-warning"
+                onclick="this.form.action='{% url 'postman:delete' %}?next={{ next_url|urlencode }}'">{% trans "Delete" %}</button>
+
+            </div>
+            <div class="p-2">
+              {% if not archived %}
+              <button type="submit" class="btn btn-sm btn-info"
+                onclick="this.form.action='{% url 'postman:archive' %}?next={{ next_url|urlencode }}'">{% trans "Archive" %}</button>{% endif %}
+            </div>
+
+            <div class="p-2">
+              {% if reply_to_pk %}<a href="{% url 'postman:reply' reply_to_pk %}?next={{ next_url|urlencode }}"
+                class="btn btn-sm btn-info">{% trans "Reply" %}</a>{% endif %}
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="p-2">
+        {% if reply_to_pk %}
+
+
+        <form action="{% url 'postman:reply' reply_to_pk %}?next={{ next_url|urlencode }}" method="post"
+          class="form-detail">
+          {% csrf_token %}
+          <div id="pm_reply">{{ form.body }}</div>
+          <button type="submit" class="btn btn-success">{% trans 'Reply' %}</button>
+        </form>{% endif %}
+        {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -4,7 +4,7 @@
 Jobber
 {% endblock head_title %}
 {% block content %}
-{{ jobbform.media }}
+{{ editjobb.media }}
 {% load crispy_forms_tags %}
 {% load customtags %}
 {% include 'func/modals.html' %}
@@ -22,7 +22,7 @@ Jobber
             <div class="p-2">
                 <h3>{{ jobb.ordre_nr }}</h3>
             </div>
-            <div class="p-2"><a class="btn btn-success btn-small" href="#" role="button">+
+            <div class="p-2"><a class="btn btn-success btn-small" href="{% url 'timeliste' %}" role="button">+
                     Timer</a></div>
             <div class="p-2">
 
@@ -37,92 +37,98 @@ Jobber
 
         <div class="d-flex justify-content-between">
             <div class="p-2">
-
+                <p><img src="{{ jobb.profile_picture.url }}" alt=""></p>
                 <p>Adresse: {{ jobb.adresse }}</p>
                 <p>Telefon nr: {{ jobb.telefon_nr }}</p>
                 <p>beskrivelse: {{ jobb.beskrivelse }}</p>
+                <p>Legg til bilder:
+                    <form method="POST" action=".">
+
+                </p>
             </div>
             <div class="p-2">
-                <div class="d-flex justify-content-end ">
-                    <div class="p-2">
-                        <div class="card mb-3 border-0" style="max-width: 20rem;">
-                            <div class="card-header">Timer på jobben:</div>
-                            <div class="card-body">
-                                <table class="table table-striped table-borderless">
-                                    <thead class="thead-custom">
-                                        <tr>
-                                            <th scope="col">Brukernavn</th>
-                                            <th scope="col">Timer</th>
+                <div class="d-flex flex-column justify-content-end ">
+                    <div class="p-2 custom-card">
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            {% regroup timer by user.username as username_list %}
-                                            {% for username in username_list %}
-                                            <td>
-                                                {{ username.grouper }}
-                                            </td>
-                                            {% for user in username.list %}
-                                            {% endfor %}
-                                            <td>
-                                                {{ username.list | running_total }}
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        <tr>
-                                            <td>Total</td>
-                                            <td>
-                                                {{ total_timer_jobb.timer__sum }}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        <h3>Timer på jobben:</h3>
+
+                        <table class="table table-striped table-borderless">
+                            <thead class="thead-postman">
+                                <tr>
+                                    <th scope="col">Brukernavn</th>
+                                    <th scope="col">Timer</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {% regroup timer by user.username as username_list %}
+                                    {% for username in username_list %}
+                                    <td>
+                                        {{ username.grouper|title }}
+                                    </td>
+                                    {% for user in username.list %}
+                                    {% endfor %}
+                                    <td>
+                                        {{ username.list | running_total }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>Totalt</td>
+                                    <td>
+                                        {{ total_timer_jobb.timer__sum }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
                     </div>
-                    <div class="p-2">
-                        <div class="card mb-3" style="max-width: 20rem;">
-                            <div class="card-header">Matriell på jobben:</div>
-                            <div class="card-body">
-                                <table class="table table-striped table-borderless">
-                                    <thead class="thead-custom">
-                                        <tr>
-                                            <th scope="col">Navn</th>
-                                            <th scope="col">Antall</th>
-                                            <th scope="col">Slett</th>
+                    <div class="p-2 custom-card">
+
+                        <h3>Matriell på jobben:</h3>
+
+                        <table class="table table-striped table-borderless">
+                            <thead class="thead-postman">
+                                <tr>
+                                    <th scope="col">Navn</th>
+                                    <th scope="col">Antall</th>
+                                    <th scope="col">Slett</th>
 
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for mat in jobb.matriell.all %}
-                                        {% if not mat.transf %}
-                                        <tr>
-                                            <td>{{ mat }}</td>
-                                            <td><b>{{ mat.antall }}</b></td>
-                                            <td><a
-                                                    href="{% url 'transf-matriell' object_id=mat.matriell.pk jobb_id=jobb.pk transf=50 %}"><span
-                                                        class="badge badge-warning">Overfør</span></a></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for mat in jobb.matriell.all %}
+                                {% if not mat.transf %}
+                                <tr>
+                                    <td>{{ mat }}</td>
+                                    <td><b>{{ mat.antall }}</b></td>
+                                    <td><a
+                                            href="{% url 'transf-matriell' object_id=mat.matriell.pk jobb_id=jobb.pk transf=50 %}"><span
+                                                class="badge badge-warning">Overfør</span></a></td>
 
-                                        </tr>
-                                        {% endif %}
-                                        {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
 
-                                    </tbody>
-                                </table>
+                            </tbody>
+                        </table>
 
-                            </div>
-                        </div>
+
 
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-row-reverse">
+        <div class="d-flex flex-row">
             <div class="p-2"><a class="btn btn-primary btn-sm" href="#" role="button">Overført Matriell</a></div>
-            <div class="p-2"></div>
+            <div class="p-2">Bilder fra jobben:<br>
+                {% for img in image %}
+                <p>{{ img.image.url }}</p>
+                {% endfor %}
+            </div>
             <div class="p-2"></div>
         </div>
 
@@ -142,10 +148,11 @@ Jobber
             </div>
         </div>
 
-        <form method="POST" action=".">
+        <form method="POST" enctype="multipart/form-data" action=".">
+
             {% csrf_token %}
             {{ editjobb|crispy }}
-            <button type="submit" class="btn btn-primary button-main">Submit</button>
+            <button type=" submit" class="btn btn-primary button-main">Submit</button>
         </form>
     </div>
 

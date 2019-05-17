@@ -49,7 +49,7 @@ Timelister
                     {% for timer in this_month_timer %}
                     <tr>
                         <th scope="row">{{ timer.dato }}</th>
-                        <td>{{ timer }}</td>
+                        <td><a href="{% url 'jobbdetail' jobb_id=timer.jobb.ordre_nr %}">{{ timer }}</a></td>
                         <td>{{ timer.timer }}</td>
                         <td><a href="{% url 'delete_timer' timer.id %}" class="confirm-delete" data-toggle="modal"
                                 data-target="#confirmTimerDeleteModal" id="deleteButton{{timer.id}}">

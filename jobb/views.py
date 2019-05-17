@@ -5,9 +5,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
 from django.db.models import Sum, Count
+from django.forms import modelformset_factory
 from timelister.forms import TimelisteForm
 from matriell.forms import MatriellForm
-from .forms import JobberForm, EditJobbForm
+from .forms import JobberForm, EditJobbForm, JobbImageForm
 from . import models
 from matriell import models as m_models
 from timelister import models as t_models
@@ -54,33 +55,80 @@ def jobblist(request):
     return render(request, 'timelister/jobblist.html', context)
 
 
-# Jobb Detail View
-
-def jobbdetail(request, jobb_id):
+def jobbtest(request, jobb_id):
     jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    imageform = JobbImageForm(initial={'jobb': jobb})
+    if request.method == "POST":
+        if imageform.is_valid():
+            form.save()
+            messages.success(request,
+                             "Image uploaded!")
+            return redirect(reverse("jobbdetail", kwargs={
+                'jobb_id': jobb_id
+            }))
+        context = {
+            'jobb': jobb,
+            'imageform': imageform,
+        }
+        return render(request, 'timelister/jobbdetail.html', context)
+
+
+# Jobb Detail View
+@login_required
+def jobbdetail(request, jobb_id):
+    # ImageFormSet = modelformset_factory(models.JobbImage,
+    #                                     form=JobbImageForm, extra=3)
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+
+    images = models.JobbImage.objects.filter(jobb=jobb)
     matriell = m_models.Matriell.objects.all()
     timer = t_models.Timeliste.objects.filter(jobb__pk=jobb_id)
     total_timer_jobb = timer.aggregate(Sum('timer'))
-    editjobb = EditJobbForm(request.POST or None, instance=jobb)
-    jobbform = JobberForm(request.POST or None)
+
+    #
     if request.method == "POST":
-        if jobbform.is_valid():
-            jobbform.save()
-            messages.success(request, 'Jobb Lagt til')
-            return redirect(reverse("jobbdetail", kwargs={
-                'jobb_id': jobbform.instance.ordre_nr
-            }))
-        elif editjobb.is_valid():
-            editjobb.save()
+        editjobb = EditJobbForm(request.POST,
+                                request.FILES, instance=jobb)
+    #     imageform = JobbImageForm(
+    #         request.POST or None, request.FILES or None, initial={'jobb': jobb})
+    #     # if jobbform.is_valid():
+    #     #     jobbform.save()
+    #     #     messages.success(request, 'Jobb Lagt til')
+    #     #     return redirect(reverse("jobbdetail", kwargs={
+    #     #         'jobb_id': jobbform.instance.ordre_nr
+    #     #     }))
+
+    #     # imageform = ImageFormSet(request.POST or None, request.FILES or None,
+    #     #                          queryset=models.JobbImage.objects.none())
+    #     if imageform.is_valid():
+    #         form = imageform.save(commit=False)
+    #         form.jobb = form.cleaned_data['jobb']
+    #         form.image = form.cleaned_data['image']
+    #         form.save()
+    #         messages.success(request,
+    #                          "Image uploaded!")
+    #         return redirect(reverse("jobbdetail", kwargs={
+    #             'jobb_id': jobb_id
+    #         }))
+    # else:
+    #     imageform = JobbImageForm(initial={'jobb': jobb})
+
+        if editjobb.is_valid():
+            form = editjobb.save(commit=False)
+            print(form.profile_picture.url)
+            form.save()
             messages.success(request, 'Jobb oppdatert')
             return redirect(reverse("jobbdetail", kwargs={
-                'jobb_id': editjobb.instance.ordre_nr
+                'jobb_id': jobb_id
             }))
+    editjobb = EditJobbForm(instance=jobb)
     context = {
+        'images': images,
+        # 'imageform': imageform,
         'total_timer_jobb': total_timer_jobb,
         'timer': timer,
         'jobb': jobb,
-        'jobbform': jobbform,
+        # 'jobbform': jobbform,
         'editjobb': editjobb,
         'matriell': matriell,
     }
