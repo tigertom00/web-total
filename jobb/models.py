@@ -42,6 +42,7 @@ class Jobber(models.Model):
 
     # TODO: Define fields here
     # Koble til timer og matriell
+
     class Meta:
         """Meta definition for Jobber."""
 

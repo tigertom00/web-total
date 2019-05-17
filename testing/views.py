@@ -6,7 +6,7 @@ from . import models
 def testimg(request):
     if request.method == 'POST':
         testform = TestImgForm(request.POST, request.FILES)
-        if testform.is_valid:
+        if testform.is_valid():
             testform.save()
             return redirect(reverse('testing'))
     testimg = models.TestImg.objects.all()
@@ -20,14 +20,20 @@ def testimg(request):
 
 def testblog_c(request):
     if request.method == 'POST':
-        testform = TestBlogForm(request.POST, request.FILES)
-        if testform.is_valid:
-            testform.save()
-            return redirect(reverse('testblog'))
-    testform = TestBlogForm()
+        testblog = TestBlogForm(request.POST, request.FILES)
+        if testblog.is_valid():
+            print('valid')
+            testblog.save()
+            print('saved')
+            return redirect(reverse("testblog", kwargs={
+                'blog_id': testblog.instance.id
+            }))
+
+    testblog = TestBlogForm()
     context = {
-        'testform': testform,
+        'testblog': testblog,
     }
+    print('get request')
     return render(request, 'testblog_c.html', context)
 
 
@@ -40,8 +46,24 @@ def testblog_l(request):
 
 
 def testblog(request, blog_id):
-    blog = get_object_or_404(models.TestBlog, blog_id=blog_id)
+    blog = get_object_or_404(models.TestBlog, id=blog_id)
     context = {
         'blog': blog,
     }
     return render(request, 'testblog.html', context)
+
+
+def edittestblog(request, blog_id):
+    blog = get_object_or_404(models.TestBlog, pk=blog_id)
+    if request.method == 'POST':
+        editform = TestBlogForm(request.POST, request.FILES, instance=blog)
+        if editform.is_valid():
+            editform.save()
+            return redirect(reverse("testblog", kwargs={
+                'blog_id': blog_id
+            }))
+    editform = TestBlogForm(instance=blog)
+    context = {
+        'editform': editform
+    }
+    return render(request, 'edittestblog.html', context)

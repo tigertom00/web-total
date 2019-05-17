@@ -65,4 +65,4 @@ class JobbImageForm(forms.ModelForm):
         """Meta definition for JobbImageform."""
 
         model = JobbImage
-        fields = ("jobb", 'image')
+        fields = ("image", "jobb")

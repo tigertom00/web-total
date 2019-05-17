@@ -58,7 +58,7 @@
     text-align: center;
     position: relative;
     padding: 0px 0 5px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .custom-card h3::after {
@@ -105,6 +105,19 @@
     -webkit-transform: translateX(-0%);
 }
 
+/* .jobb-bilder {
+    margin-right: 0;
+    width: 200px;
+} */
+
+.jobb-bilder select {
+    display: none !important;
+}
+
+.jobb-bilder label {
+    display: none;
+}
+
 .thead-custom th {
     background-color: #073642;
 }
@@ -117,6 +130,16 @@
     width: 800px !important;
     max-width: 800px !important;
     margin: auto !important;
+}
+
+.list-group-custom {
+    border: 1px solid #002B36 !important;
+
+
+}
+
+.list-group-item-custom {
+    background: rgba(255, 255, 255, 0.05) !important;
 }
 
 .form-detail input {
@@ -148,11 +171,15 @@
     border: 1px solid #b3b3b3;
 }
 
+.form-upload input[type="file"] {
+    background: #B58900;
+}
+
 .form-detail input[type="text"],
 [type="password"],
 ::-webkit-input-placeholder {
     color: #999999;
-    font-style:
+
 }
 
 .form-detail .register {
@@ -204,6 +231,17 @@
     margin-bottom: 10px !important;
 }
 
+.form-group input[type="file"] {
+    margin-top: 1px !important;
+}
+
+/* <input type="file" name="profile_picture" accept="image/*" class="clearablefileinput" id="id_profile_picture"> */
+
+
+.form-group id {
+    background: #B58900 !important;
+}
+
 .form-group select {
     margin-bottom: 10px !important;
 }
@@ -237,6 +275,10 @@
     font-size: 16px;
     padding: 0px;
 }
+
+/* .col-form-label {
+    display: none;
+} */
 
 /* NOT used ATM */
 .myform-detail h2 {

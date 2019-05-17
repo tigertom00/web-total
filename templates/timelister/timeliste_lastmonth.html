@@ -1,59 +1,69 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Timelister
+Timeliste Forje måned
 {% endblock head_title %}
 {% block content %}
 {{ timeform.media }}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
-
-
 <div class="col-lg-8">
     {% include 'func/messages.html' %}
-    <div class="card border-0 shadow mb-4">
+    <div class="card border-0 shadow bg-dark mb-4">
         <div class="card-body">
-            <h2 class="card-body">Timer for {{ lastMonth|date:'F o' }}</h2>
-            <table class="table table-striped table-borderless">
-                <thead class="thead-custom">
-                    <tr>
-                        <th scope="col">Dato</th>
-                        <th scope="col">Sted</th>
-                        <th scope="col">Timer</th>
-                        <th scope="col"></th>
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h2 class="card-body">Timer for {{ lastMonth|date:'F o' }}</h2>
+                </div>
+                <div class="p-2">
+                </div>
+                <div class="p-2">
+                    <h3>
+                        {% include 'func/name.html' %}
+                    </h3>
+                </div>
+            </div>
+            <div class="custom-card">
+                <table class="table table-striped table-borderless">
+                    <thead class="thead-postman">
+                        <tr>
+                            <th scope="col">Dato</th>
+                            <th scope="col">Sted</th>
+                            <th scope="col">Timer</th>
+                            <th scope="col"></th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for timer in last_month_timer %}
-                    <tr>
-                        <th scope="row">{{ timer.dato }}</th>
-                        <td>{{ timer }}</td>
-                        <td>{{ timer.timer }}</td>
-                        <td><a href="{% url 'delete_timer' timer.id %}" class="confirm-delete" data-toggle="modal"
-                                data-target="#confirmTimerDeleteModal" id="deleteButton{{timer.id}}">
-                                <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
-                    </tr>
-                    {% endfor %}
-                    <tr>
-                        <th scope="row">Sum</th>
-                        <td></td>
-                        <td>{{ total_timer_lastmonth.timer__sum }}</td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for timer in last_month_timer %}
+                        <tr>
+                            <th scope="row">{{ timer.dato }}</th>
+                            <td><a href="{% url 'jobbdetail' jobb_id=timer.jobb.ordre_nr %}">{{ timer }}</a></td>
+                            <td>{{ timer.timer }}</td>
+                            <td><a href="{% url 'delete_timer' timer.id %}" class="confirm-delete" data-toggle="modal"
+                                    data-target="#confirmTimerDeleteModal" id="deleteButton{{timer.id}}">
+                                    <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <th scope="row">Totalt</th>
+                            <td></td>
+                            <td>{{ total_timer_lastmonth.timer__sum }}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-
 </div>
 <!-- ###### sidebar ##### -->
 <div class="col-lg-4">
     <!-- ### Sidebox ### -->
-    <div class="card border-0 shadow mb-4 d-none d-lg-block">
+    <div class="card border-0 shadow mb-4 bg-dark d-lg-block">
         <div class="card-body">
             <div class="form-group">
-                <h2>Skriv Timer for {{ user.username }}:
+                <h2>Skriv Timer for<br>{% include 'func/name.html' %}:
                 </h2>
                 <form method="POST" action=".">
                     {% csrf_token %}
@@ -63,7 +73,5 @@ Timelister
             </div>
         </div>
     </div>
-
 </div>
-
 {% endblock content %}

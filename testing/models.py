@@ -23,7 +23,7 @@ class TestBlog(models.Model):
     """Model definition for TestBlog."""
     title = models.CharField(max_length=30)
     body = models.TextField(blank=True)
-    profile_img = models.ImageField(upload_to='tesing/blog')
+    profile_img = models.ImageField(upload_to='testing/blog')
 
     # TODO: Define fields here
 

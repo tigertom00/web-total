@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block head_title %}
+Edit Jobb
+{% endblock head_title %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<div class="container">
+    {% include 'func/messages.html' %}
+    <div class="jumbotron">
+
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+                <h2 class="card-body">Edit Jobb</h2>
+            </div>
+            <div class="p-2"></div>
+            <div class="p-2">
+                <h3>{{ jobb.ordre_nr }}</h3>
+            </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" action=".">
+            {% csrf_token %}
+            {{ editjobb|crispy }}
+            <button type=" submit" class="btn btn-primary button-main">Submit</button>
+        </form>
+
+    </div>
+</div>
+{% endblock content %}
