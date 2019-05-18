@@ -24,7 +24,11 @@
                             Dropdown
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                            {% if user.is_staff %}
                             <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                            {% endif %}
+
                             <a class="dropdown-item" href="{% url 'root' %}">Root</a>
                             <a class="dropdown-item" href="{% url 'home' %}">Home</a>
                             <div class="dropdown-divider"></div>
@@ -49,28 +53,22 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_reset_password' %}">reset password</a>
-                    </li>
+                    </li>{% if user.is_staff %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-                    </li>
+                    </li>{% endif %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Timelister
+                            Jobb
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">Ny timeliste</a>
-                            <a class="dropdown-item" href="#">Ny jobb</a>
-                            <a class="dropdown-item" href="{% url 'matriell-list' %}">Matriell liste</a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'timeliste' %}">Timeliste</a>
-                            <a class="dropdown-item" href="{% url 'timerlastmonth' %}">Timeliste Last Month</a>
+                            <a class="dropdown-item" href="{% url 'timerlastmonth' %}">Timeliste Forje Måned</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'jobblist' %}">Jobb Liste</a>
+                            <a class="dropdown-item" href="{% url 'matriell-list' %}">Matriell liste</a>
                             <a class="dropdown-item" href="{% url 'leverandor-list' %}">leveranør-liste</a>
-                            <a class="dropdown-item" href="{% url 'account_signup' %}">Signup</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'account_change_password' %}">Change PW skdfsakdfj</a>
                         </div>
                     </li>
                 </ul>

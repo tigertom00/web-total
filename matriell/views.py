@@ -2,39 +2,13 @@ from django.shortcuts import redirect, reverse, get_object_or_404, render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from .forms import MatriellForm, EditMatriellForm
+from .forms import MatriellForm, EditMatriellForm, LeverandorerForm
 from timelister import models as t_models
 from jobb import models as j_models
 from . import models
 
 redirect_if_referer_not_found = '/'
 # TODO: Delete transfered matriell from jobb
-
-
-# leverandor liste
-@login_required
-def leverandorList(request):
-    leverandor = models.Leverandorer.objects.all()
-    leverandorform = LeverandorerForm(request.POST or None)
-    if request.method == "POST":
-        if leverandor.is_valid():
-            leverandor.save()
-            messages.success(request, 'Leveranør Lagt til')
-            return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
-    context = {
-        'leverandor': leverandor,
-        'leverandorform': leverandorform
-    }
-    return render(request, 'matriell/leverandor-liste.html', context)
-
-
-# Delete Leverandorer from Leverandorer list
-@login_required
-def leveranorDelete(request, lev_id):
-    leverandor = get_object_or_404(models.Leverandorer, pk=lev_id)
-    leverandor.delete()
-    messages.warning(request, 'Leverandor deleted.')
-    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
 
 # Matriell List View
@@ -161,4 +135,30 @@ def transf_matriell(request, object_id, jobb_id, transf):
                 jobb_matriell.transf = True
                 jobb_matriell.save()
                 messages.info(request, 'Matriell Overført.')
+    return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+
+
+# leverandor liste
+@login_required
+def leverandorList(request):
+    leverandor = models.Leverandorer.objects.all()
+    leverandorform = LeverandorerForm(request.POST or None)
+    if request.method == "POST":
+        if leverandorform.is_valid():
+            leverandorform.save()
+            messages.success(request, 'Leveranør Lagt til')
+            return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
+    context = {
+        'leverandor': leverandor,
+        'leverandorform': leverandorform
+    }
+    return render(request, 'matriell/leverandor-liste.html', context)
+
+
+# Delete Leverandorer from Leverandorer list
+@login_required
+def leveranorDelete(request, lev_id):
+    leverandor = get_object_or_404(models.Leverandorer, pk=lev_id)
+    leverandor.delete()
+    messages.warning(request, 'Leverandor deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
