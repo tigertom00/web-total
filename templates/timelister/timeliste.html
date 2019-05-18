@@ -7,6 +7,23 @@ Timeliste denne måned
 {{ timeform.media }}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
+<!-- ###### sidebar ##### -->
+<div class="col-lg-4">
+    <!-- ### Sidebox ### -->
+    <div class="card border-0 shadow bg-dark mb-4 d-lg-block">
+        <div class="card-body">
+            <div class="form-group">
+                <h2>Skriv Timer for<br>{% include 'func/name.html' %}:
+                </h2>
+                <form method="POST" action=".">
+                    {% csrf_token %}
+                    {{ timeform|crispy }}
+                    <button type="submit" class="btn btn-primary button-card">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="col-lg-8">
     {% include 'func/messages.html' %}
     <div class="card border-0 shadow bg-dark mb-4">
@@ -57,21 +74,5 @@ Timeliste denne måned
     </div>
 
 </div>
-<!-- ###### sidebar ##### -->
-<div class="col-lg-4">
-    <!-- ### Sidebox ### -->
-    <div class="card border-0 shadow bg-dark mb-4 d-lg-block">
-        <div class="card-body">
-            <div class="form-group">
-                <h2>Skriv Timer for<br>{% include 'func/name.html' %}:
-                </h2>
-                <form method="POST" action=".">
-                    {% csrf_token %}
-                    {{ timeform|crispy }}
-                    <button type="submit" class="btn btn-primary button-card">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
 {% endblock content %}

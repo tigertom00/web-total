@@ -1,76 +1,54 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Jobber
+{{ matriell|title }}
 {% endblock head_title %}
 {% block content %}
-
 {% load crispy_forms_tags %}
+{% load customtags %}
 {% include 'func/modals.html' %}
-
-
-<div class="col-lg-8">
+<div class="container">
     {% include 'func/messages.html' %}
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body"></h2>
-                </div>
-                <div class="p-2">
-                    <h1></h1>
-                </div>
-                <div class="p-2">
-                    <a href="{% url 'delete_matriell' object_id=matriell.id %}" class="confirm-delete"
-                        data-toggle="modal" data-target="#confirmTimerDeleteModal" id="deleteButton{{matriell.id}}">
-                        <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
-                </div>
+    <div class="jumbotron">
+        <div class="d-flex justify-content-between ">
+            <div class="p-2">
+                <h2 class="jumbotron">{{ matriell|title }}</h2>
             </div>
-            <p>El nr: {{ matriell.el_nr }}</p>
-            <p>Tittel: {{ matriell }}</p>
-            <p>Leverandør: {{ matriell.leverandor }}</p>
-            <p>info: {{ matriell.info }}</p>
+            <div class="p-2">
+                <h3>{{ matriell.el_nr }}</h3>
+            </div>
+            <div class="p-2"><a class="btn btn-sm btn-success" href="#" role="button" tooltip-toggle="tooltip"
+                    title="Legg til timer">???</a>
 
+            </div>
         </div>
-    </div>
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body">Edit Jobb</h2>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2">
-                    <h3></h3>
-                </div>
+        <a href="{% url 'delete_matriell' object_id=matriell.id %}" class="confirm-delete" data-toggle="modal"
+            data-target="#confirmTimerDeleteModal" id="deleteButton{{mat.id}}">
+            <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>&ensp;&ensp;
+        <a href="{% url 'editmatriell' matriell.pk %}"><i class="fas fa-edit" tooltip-toggle="tooltip"
+                title="Edit"></i></a>
+        <div class="d-flex justify-content-between">
+            <div class="p-2">
+                <p><img src="{{ matriell.image.url }}" alt=""></p>
+                <ul class="list-group list-group-custom">
+                    <li class="list-group-item list-group-item-custom"><b><u>Leverandør:</u></b>
+                        <br><a href="#">{{ matriell.leverandor }}</a>
+                    </li>
+                    {% if matriell.info %}
+                    <li class="list-group-item list-group-item-custom"><b><u>Info:</u></b>
+                        <br>{{ matriell.info }}
+                    </li>
+                    {% endif %}
+                </ul>
             </div>
 
-            <form method="POST" action=".">
-                {% csrf_token %}
 
-                <button type="submit" class="btn btn-primary button-main">Submit</button>
-            </form>
+            <div class="p-2">
+
+            </div>
         </div>
-    </div>
 
+
+    </div>
 </div>
-<!-- ###### sidebar ##### -->
-<div class="col-lg-4">
-    <!-- ### Sidebox ### -->
-    <div class="card border-0 shadow mb-4 d-none d-lg-block">
-        <div class="card-body">
-            <div class="form-group">
-                <h2>Fyll inn ny jobb:
-                </h2>
-                <form method="POST" action=".">
-                    {% csrf_token %}
-
-                    <button type="submit" class="btn btn-primary button-card">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-</div>
-
 {% endblock content %}

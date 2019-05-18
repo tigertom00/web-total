@@ -23,7 +23,7 @@ redirect_if_referer_not_found = '/'
 # TODO: look at pagination
 @login_required
 def jobblist(request):
-    jobb_list = models.Jobber.objects.all()
+    jobb_list = models.Jobber.objects.order_by('-ordre_nr')
     most_recent = models.Jobber.objects.order_by('-date')
     paginator = Paginator(jobb_list, 10)
     page_request_var = 'page'
@@ -94,6 +94,7 @@ def editjobb(request, jobb_id):
             }))
     editjobb = EditJobbForm(instance=jobb)
     context = {
+        'jobb': jobb,
         'editjobb': editjobb,
     }
     return render(request, 'jobb/editjobb.html', context)

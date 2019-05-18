@@ -1,33 +1,27 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Jobber
+{{ jobb|title }}
 {% endblock head_title %}
 {% block content %}
 {% load crispy_forms_tags %}
 {% load customtags %}
 {% include 'func/modals.html' %}
-
-
 <div class="container">
     {% include 'func/messages.html' %}
     <div class="jumbotron">
-
         <div class="d-flex justify-content-between ">
             <div class="p-2">
                 <h2 class="jumbotron">{{ jobb|title }}</h2>
             </div>
-
             <div class="p-2">
                 <h3>{{ jobb.ordre_nr }}</h3>
             </div>
-            <div class="p-2"><a class="btn btn-sm btn-success" href="{% url 'timeliste' %}" role="button">+
-                    Timer</a>
-                <a class="btn btn-info btn-sm" href="{% url 'jobb-matriell' jobb.ordre_nr %}" role="button">+/-
-                    Matriell</a>
-                <a class="btn btn-primary btn-sm" href="#" role="button">Overført Matriell</a>
+            <div class="p-2"><a class="btn btn-sm btn-success" href="{% url 'timeliste' %}" role="button"
+                    tooltip-toggle="tooltip" title="Legg til timer">Timer</a>
+                <a class="btn btn-info btn-sm" href="{% url 'jobb-matriell' jobb.ordre_nr %}" role="button"
+                    tooltip-toggle="tooltip" title="Legg til matriell">Matriell</a>
             </div>
-
         </div>
         <a href="{% url 'delete_jobber' jobb.ordre_nr %}" class="confirm-delete" data-toggle="modal"
             data-target="#confirmTimerDeleteModal" id="deleteButton{{jobb.ordre_nr}}">
@@ -39,7 +33,8 @@ Jobber
                 <p><img src="{{ jobb.profile_picture.url }}" alt=""></p>
                 <ul class="list-group list-group-custom">
                     <li class="list-group-item list-group-item-custom"><b><u>Adresse:</u></b>
-                        <br>{{ jobb.adresse }}
+                        <br><a href="http://maps.google.com/maps?q={{ jobb.adresse }}" target="_blank"
+                            tooltip-toggle="tooltip" title="Open in Google Maps">{{ jobb.adresse }}</a>
                     </li>
                     <li class="list-group-item list-group-item-custom"><b><u>Telefon nr:</u></b>
                         <br>>{{ jobb.telefon_nr }}
@@ -51,6 +46,8 @@ Jobber
                     {% endif %}
                 </ul>
             </div>
+
+
             <div class="p-2">
                 <div class="d-flex flex-column justify-content-end ">
                     {% comment %} Timer på Jobben {% endcomment %}
@@ -149,14 +146,5 @@ Jobber
             </div>
         </div>
     </div>
-
-
-
-
-
-
 </div>
-
-
-
 {% endblock content %}

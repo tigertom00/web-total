@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Timeliste Forje måned
+leverandor Liste
 {% endblock head_title %}
 {% block content %}
-{{ timeform.media }}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
 <!-- ###### sidebar ##### -->
@@ -13,16 +12,17 @@ Timeliste Forje måned
     <div class="card border-0 shadow mb-4 bg-dark d-lg-block">
         <div class="card-body">
             <div class="form-group">
-                <h2>Skriv Timer for<br>{% include 'func/name.html' %}:
+                <h2>Registrer nytt leverandor<br>
                 </h2>
                 <form method="POST" action=".">
                     {% csrf_token %}
-                    {{ timeform|crispy }}
+                    {{ leverandorform|crispy }}
                     <button type="submit" class="btn btn-primary button-card">Submit</button>
                 </form>
             </div>
         </div>
     </div>
+
 </div>
 <div class="col-lg-8">
     {% include 'func/messages.html' %}
@@ -30,49 +30,39 @@ Timeliste Forje måned
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <div class="p-2">
-                    <h2 class="card-body">Timer for {{ lastMonth|date:'F o' }}</h2>
+                    <h2 class="card-body">leverandor:</h2>
                 </div>
+                <div class="p-2"></div>
                 <div class="p-2">
-                </div>
-                <div class="p-2">
-                    <h3>
-                        {% include 'func/name.html' %}
-                    </h3>
                 </div>
             </div>
             <div class="custom-card">
                 <table class="table table-striped table-borderless">
-                    <thead class="thead-postman">
+                    <thead class="thead-custom">
                         <tr>
-                            <th scope="col">Dato</th>
-                            <th scope="col">Sted</th>
-                            <th scope="col">Timer</th>
-                            <th scope="col"></th>
 
+                            <th scope="col">Navn</th>
+
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for timer in last_month_timer %}
+                        {% for lev in leverandor %}
                         <tr>
-                            <th scope="row">{{ timer.dato }}</th>
-                            <td><a href="{% url 'jobbdetail' jobb_id=timer.jobb.ordre_nr %}">{{ timer }}</a></td>
-                            <td>{{ timer.timer }}</td>
-                            <td><a href="{% url 'delete_timer' timer.id %}" class="confirm-delete" data-toggle="modal"
-                                    data-target="#confirmTimerDeleteModal" id="deleteButton{{timer.id}}">
+
+                            <td><a href="#">{{ lev }}</a></td>
+
+                            <td><a href="{% url 'delete_leveranor' lev_id=lev.id %}" class="confirm-delete"
+                                    data-toggle="modal" data-target="#confirmTimerDeleteModal"
+                                    id="deleteButton{{lev.id}}">
                                     <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+                            </td>
                         </tr>
                         {% endfor %}
-                        <tr>
-                            <th scope="row">Totalt</th>
-                            <td></td>
-                            <td>{{ total_timer_lastmonth.timer__sum }}</td>
-                            <td></td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-
 {% endblock content %}

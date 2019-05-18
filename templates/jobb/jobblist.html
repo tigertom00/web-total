@@ -1,67 +1,15 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Jobber
+Jobb Liste
 {% endblock head_title %}
 {% block content %}
-{{ jobbform.media }}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
-
-
-<div class="col-lg-8">
-    {% include 'func/messages.html' %}
-    <div class="card border-0 shadow mb-4">
-        <div class="card-body">
-            <div class="d-flex justify-content-between">
-                <div class="p-2">
-                    <h2 class="card-body">Jobber</h2>
-                </div>
-                <div class="p-2"></div>
-                <div class="p-2"></div>
-            </div>
-
-            <table class="table table-striped table-borderless">
-                <thead class="thead-custom">
-                    <tr>
-                        <th scope="col">Ordre</th>
-                        <th scope="col">Tittel</th>
-                        <th scope="col">Adresse</th>
-                        <th scope="col">Telefon</th>
-                        <th scope="col"></th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for jobber in most_recent %}
-
-                    <tr>
-                        <th scope="row">{{ jobber.ordre_nr }}</th>
-
-                        <td><a href="{% url 'jobbdetail' jobb_id=jobber.ordre_nr %}">{{ jobber }}</a></td>
-
-                        <td>{{ jobber.adresse }}</td>
-                        <td>{{ jobber.telefon_nr }}</td>
-                        <td><a href="{% url 'delete_jobber' jobber.ordre_nr %}" class="confirm-delete"
-                                data-toggle="modal" data-target="#confirmTimerDeleteModal"
-                                id="deleteButton{{jobber.ordre_nr}}">
-                                <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
-                        </td>
-
-                    </tr>
-                    </a>
-                    {% endfor %}
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</div>
 <!-- ###### sidebar ##### -->
 <div class="col-lg-4">
     <!-- ### Sidebox ### -->
-    <div class="card border-0 shadow mb-4 d-none d-lg-block">
+    <div class="card border-0 shadow mb-4 bg-dark d-lg-block">
         <div class="card-body">
             <div class="form-group">
                 <h2>Fyll inn ny jobb:
@@ -74,7 +22,97 @@ Jobber
             </div>
         </div>
     </div>
-
 </div>
+<!-- ###### Main Column ##### -->
+<div class="col-lg-8">
+    {% include 'func/messages.html' %}
+    <div class="card border-0 shadow bg-dark mb-2">
+        <div class="card-body">
+            <div class="d-flex justify-content-between">
+                <div class="p-2">
+                    <h2 class="card-body">Jobber</h2>
+                </div>
+                <div class="p-2"></div>
+                <div class="p-2"></div>
+            </div>
+            <div class="custom-card">
+                <table class="table table-striped table-borderless">
+                    <thead class="thead-custom">
+                        <tr>
+                            <th scope="col">Ordre</th>
+                            <th scope="col">Tittel</th>
+                            <th scope="col">Adresse</th>
+                            <th scope="col">Telefon</th>
+                            <th scope="col"></th>
 
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for jobber in queryset %}
+
+                        <tr>
+                            <th scope="row"><a
+                                    href="{% url 'jobbdetail' jobb_id=jobber.ordre_nr %}">{{ jobber.ordre_nr }}</a></th>
+
+                            <td><a href="{% url 'jobbdetail' jobb_id=jobber.ordre_nr %}">{{ jobber }}</a></td>
+
+                            <td>
+                                <a href="http://maps.google.com/maps?q={{ jobber.adresse }}"
+                                    target="_blank">{{ jobber.adresse }}</a>
+                            </td>
+                            <td>{{ jobber.telefon_nr }}</td>
+                            <td><a href="{% url 'delete_jobber' jobber.ordre_nr %}" class="confirm-delete"
+                                    data-toggle="modal" data-target="#confirmTimerDeleteModal"
+                                    id="deleteButton{{jobber.ordre_nr}}">
+                                    <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>
+                            </td>
+
+                        </tr>
+                        </a>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div>
+
+        </div>
+    </div>
+    {% if queryset.has_other_pages %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            {% if queryset.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?{{ page_request_var }}={{ queryset.previous_page_number }}"><i
+                        class="fas fa-step-backward"></i></a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#"><i class="fas fa-step-backward"></i></a>
+            </li>
+            {% endif %}
+            {% for page in queryset.paginator.page_range %}
+            {% if queryset.number == page %}
+            <li class="page-item"><a class="page-link active"
+                    href="?{{ page_request_var }}={{ queryset.number }}"><b><u>{{ queryset.number }}</u></b></a></li>
+            {% else %}
+            <li class="page-item"><a class="page-link" href="?{{ page_request_var }}={{ page }}">{{ page }}</a></li>
+            {% endif %}
+            {% endfor %}
+            {% if queryset.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?{{ page_request_var }}={{ queryset.next_page_number }}"><i
+                        class="fas fa-step-forward"></i></a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" href="#"><i class="fas fa-step-forward"></i></a>
+            </li>
+            {% endif %}
+
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 {% endblock content %}

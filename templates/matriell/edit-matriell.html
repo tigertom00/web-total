@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block head_title %}
-Edit Jobb
+Edit {{ matriell|title }}
 {% endblock head_title %}
 {% block content %}
 {% load crispy_forms_tags %}
@@ -10,16 +10,17 @@ Edit Jobb
     <div class="jumbotron">
         <div class="d-flex justify-content-between">
             <div class="p-2">
-                <h2 class="card-body">Edit <a href="{% url 'jobbdetail' jobb_id=jobb.pk %}">{{ jobb|title }}</a></h2>
+                <h2 class="card-body">Edit <a
+                        href="{% url 'matriell-detail' object_id=matriell.pk %}">{{ matriell|title }}</a></h2>
             </div>
             <div class="p-2"></div>
             <div class="p-2">
-                <h3><a href="{% url 'jobbdetail' jobb_id=jobb.pk %}">{{ jobb.ordre_nr }}</a></h3>
+                <h3><a href="{% url 'matriell-detail' object_id=matriell.pk %}">{{ matriell.el_nr }}</a></h3>
             </div>
         </div>
         <form method="POST" enctype="multipart/form-data" action=".">
             {% csrf_token %}
-            {{ editjobb|crispy }}
+            {{ editmatriell|crispy }}
             <button type=" submit" class="btn btn-primary button-main">Submit</button>
         </form>
     </div>

@@ -30,7 +30,8 @@ class Matriell(models.Model):
     info = models.CharField(max_length=256, blank=True)
     leverandor = models.ForeignKey(
         Leverandorer, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField()
+    image = models.ImageField(
+        upload_to='matriell_image', default='default/matriell.png')
     # TODO: Define fields here
 
     class Meta:
