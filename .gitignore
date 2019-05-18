@@ -136,6 +136,6 @@ dmypy.json
 .pyre/
 
 #custom
-
-**/.idea
+requirements.txt
+**/.idea/**
 # End of https://www.gitignore.io/api/django
