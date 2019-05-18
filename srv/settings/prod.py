@@ -4,7 +4,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = [tigertom.pythonanywhere.com]
+ALLOWED_HOSTS = ['tigertom.pythonanywhere.com']
 
 DATABASES = {
     'default': {
