@@ -4,8 +4,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib import messages
-from django.db.models import Sum, Count
-from django.forms import modelformset_factory
+from django.db.models import Sum
 from timelister.forms import TimelisteForm
 from matriell.forms import MatriellForm
 from .forms import JobberForm, EditJobbForm, JobbImageForm
@@ -14,19 +13,15 @@ from matriell import models as m_models
 from timelister import models as t_models
 from datetime import datetime, timedelta
 
-from django.urls import reverse_lazy
-
 User = get_user_model()
 today = datetime.now()
 firstday = today.replace(day=1)
 redirect_if_referer_not_found = '/'
 
 
-# Jobber #
-
 # Jobb List View
-
-
+# TODO: look at pagination
+@login_required
 def jobblist(request):
     jobb_list = models.Jobber.objects.all()
     most_recent = models.Jobber.objects.order_by('-date')
@@ -52,25 +47,7 @@ def jobblist(request):
         'page_request_var': page_request_var,
         'most_recent': most_recent,
     }
-    return render(request, 'timelister/jobblist.html', context)
-
-
-def jobbtest(request, jobb_id):
-    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
-    imageform = JobbImageForm(initial={'jobb': jobb})
-    if request.method == "POST":
-        if imageform.is_valid():
-            form.save()
-            messages.success(request,
-                             "Image uploaded!")
-            return redirect(reverse("jobbdetail", kwargs={
-                'jobb_id': jobb_id
-            }))
-        context = {
-            'jobb': jobb,
-            'imageform': imageform,
-        }
-        return render(request, 'timelister/jobbdetail.html', context)
+    return render(request, 'jobb/jobblist.html', context)
 
 
 # Jobb Detail View
@@ -91,7 +68,6 @@ def jobbdetail(request, jobb_id):
                 'jobb_id': jobb_id
             }))
     bilderform = JobbImageForm(initial={'jobb': jobb})
-
     context = {
         'bilderform': bilderform,
         'bilder': bilder,
@@ -100,9 +76,11 @@ def jobbdetail(request, jobb_id):
         'jobb': jobb,
         'matriell': matriell,
     }
-    return render(request, 'timelister/jobbdetail.html', context)
+    return render(request, 'jobb/jobbdetail.html', context)
 
 
+# Edit jobb Form
+@login_required
 def editjobb(request, jobb_id):
     jobb = get_object_or_404(models.Jobber, pk=jobb_id)
     if request.method == "POST":
@@ -118,38 +96,20 @@ def editjobb(request, jobb_id):
     context = {
         'editjobb': editjobb,
     }
-    return render(request, 'timelister/editjobb.html', context)
+    return render(request, 'jobb/editjobb.html', context)
 
-
-def bilderjobb(request, jobb_id):
-    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
-    if request.method == "POST":
-        bilder = JobbImageForm(request.POST,
-                               request.FILES, initial={'jobb': jobb})
-        if bilder.is_valid():
-            bilder.save()
-            messages.success(request, 'Jobb oppdatert')
-            return redirect(reverse("jobbdetail", kwargs={
-                'jobb_id': jobb_id
-            }))
-    bilder = JobbImageForm(initial={'jobb': jobb})
-    context = {
-        'bilder': bilder,
-    }
-    return render(request, 'timelister/bilderjobb.html', context)
 
 # Delete Jobber
-
-
-def jobberDelete(request, object_id):
-    object = get_object_or_404(models.Jobber, pk=object_id)
-    object.delete()
+@login_required
+def jobberDelete(request, jobb_id):
+    jobb = get_object_or_404(models.Jobber, pk=jobb_id)
+    jobb.delete()
     messages.warning(request, 'Jobb deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
+
 # Add Matriell To Jobber
-
-
+@login_required
 def jobbMatriell(request, jobb_id):
     jobb = get_object_or_404(models.Jobber, pk=jobb_id)
     matriell = m_models.Matriell.objects.all()
@@ -157,4 +117,4 @@ def jobbMatriell(request, jobb_id):
         'matriell': matriell,
         'jobb': jobb,
     }
-    return render(request, 'timelister/jobb_matriell.html', context)
+    return render(request, 'jobb/jobb_matriell.html', context)

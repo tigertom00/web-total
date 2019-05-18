@@ -20,62 +20,9 @@ today = datetime.now()
 firstday = today.replace(day=1)
 redirect_if_referer_not_found = '/'
 
-# Not in use
-
-
-def new_timeliste(request):
-
-    timeform = TimelisteForm(request.POST or None)
-    if request.method == "POST":
-        if timeform.is_valid():
-            timeform.instance.user = request.user
-            timeform.save()
-            return redirect(reverse("new_timeliste"))
-    context = {
-        'timeform': timeform,
-
-    }
-
-    return render(request, 'timelister/new_timeliste.html', context)
-
-# NOT IN USE
-
-
-def new_jobb(request):
-
-    jobb_list = j_models.Jobber.objects.all()
-    most_recent = j_models.Jobber.objects.order_by('-timestamp')[:3]
-    paginator = Paginator(jobb_list, 1)
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
-    try:
-        paginated_queryset = paginator.page(page)
-    except PageNotAnInteger:
-        paginated_queryset = paginator.page(1)
-    except EmptyPage:
-        paginated_queryset = paginator.page(paginator.num_pages)
-
-    jobbform = JobberForm(request.POST or None)
-
-    if request.method == "POST":
-        if jobbform.is_valid():
-            jobbform.save()
-            messages.success(request, 'Jobb Lagt til')
-            return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
-    context = {
-        'jobbform': jobbform,
-        'queryset': paginated_queryset,
-        'page_request_var': page_request_var,
-        'most_recent': most_recent,
-    }
-
-    pass
-
-# Timelister #
 
 # Timeliste Current month List View
-
-
+@login_required
 def timeliste(request):
     current_month = datetime.now().month
     this_month_timer = models.Timeliste.objects.filter(
@@ -96,9 +43,9 @@ def timeliste(request):
     }
     return render(request, 'timelister/timeliste.html', context)
 
+
 # Timeliste Last Month List View
-
-
+@login_required
 def timelisteLastmonth(request):
     last_month = datetime.now().month-1
     lastMonth = firstday - timedelta(days=1)
@@ -121,19 +68,18 @@ def timelisteLastmonth(request):
 
     return render(request, 'timelister/timeliste_lastmonth.html', context)
 
+
 # Delete Timer
-
-
+@login_required
 def timerDelete(request, object_id):
-    object = get_object_or_404(models.Timeliste, pk=object_id)
-    object.delete()
+    timer = get_object_or_404(models.Timeliste, pk=object_id)
+    timer.delete()
     messages.warning(request, 'Timer deleted.')
     return redirect(request.META.get('HTTP_REFERER', redirect_if_referer_not_found))
 
 
+# NOT IN USE
 # Modal Timer Form, from django-bootstrap-modal-forms==1.4.2
-
-
 class ModalTimerView(BSModalCreateView):
     template_name = 'func/modal_timer_form.html'
     form_class = ModalTimerForm

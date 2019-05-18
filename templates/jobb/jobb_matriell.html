@@ -128,12 +128,8 @@ Jobb Matriell
                                 <th scope="row">{{ mat.matriell.el_nr }}</th>
                                 <td>{{ mat }}</td>
                                 <td><b>{{ mat.antall }}</b></td>
-                                <td><a
-                                        href="{% url 'delete-matriell' object_id=mat.matriell.pk jobb_id=jobb.pk antall=-1 %}"><i
-                                            class="fas fa-minus"></i><b>1</b></a></td>
-                                <td><a
-                                        href="{% url 'delete-matriell' object_id=mat.matriell.pk jobb_id=jobb.pk antall=-10 %}"><i
-                                            class="fas fa-minus"></i><b>10</b></a></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             {% endif %}
                             {% endfor %}
