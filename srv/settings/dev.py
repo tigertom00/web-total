@@ -4,7 +4,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['nxfs.xyz']
+ALLOWED_HOSTS = []
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'

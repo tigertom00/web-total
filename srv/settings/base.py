@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'timelister',
     'matriell',
     'members',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
