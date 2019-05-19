@@ -19,15 +19,20 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Jobb
+                        <i class="fas fa-plug"></i> Jobb
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{% url 'timeliste' %}">Timeliste</a>
-                        <a class="dropdown-item" href="{% url 'timerlastmonth' %}">Timeliste Forje Måned</a>
+                        <a class="dropdown-item" href="{% url 'timeliste' %}"><i class="far fa-file"></i> Timeliste
+                            denne måned</a>
+                        <a class="dropdown-item" href="{% url 'timerlastmonth' %}"><i class="far fa-file-alt"></i>
+                            Timeliste forje måned</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'jobblist' %}">Jobb Liste</a>
-                        <a class="dropdown-item" href="{% url 'matriell-list' %}">Matriell liste</a>
-                        <a class="dropdown-item" href="{% url 'leverandor-list' %}">leveranør-liste</a>
+                        <a class="dropdown-item" href="{% url 'jobblist' %}"><i class="far fa-list-alt"></i> Jobb
+                            Liste</a>
+                        <a class="dropdown-item" href="{% url 'matriell-list' %}"><i class="fas fa-parachute-box"></i>
+                            Matriell liste</a>
+                        <a class="dropdown-item" href="{% url 'leverandor-list' %}"><i class="fas fa-list"></i>
+                            leveranør-liste</a>
                     </div>
                 </li>
                 {% endif %}
@@ -53,7 +58,7 @@
                         {% if user.is_staff %}
                         <a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fas fa-tools"></i> Admin</a>
                         {% endif %}
-                        <a class="dropdown-item" href="{% url 'root' %}">Root</a>
+                        <a class="dropdown-item" href="{% url 'root' %}"><i class="fas fa-home"></i> Home</a>
                         <a class="dropdown-item" href="{% url 'postman:inbox' %}">
                             <i class="fas fa-envelope"></i>&nbsp;&nbsp;{% trans "Inbox" %}
                             {% if unread_count %}
