@@ -6,82 +6,80 @@
     {% load crispy_forms_tags %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="{% url 'root' %}"><img src="{% static 'icons/nxfs-logo.png' %}" width="50"
-                    alt=""></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
-                aria-controls="#navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand" href="{% url 'root' %}">
+                <img src="{% static 'icons/nxfs-logo.png' %}" width="50" alt="">
+            </a>
 
-            <div class="collapse navbar-collapse" id="navbarColor02">
-                <ul class="navbar-nav mr-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-                            {% if user.is_staff %}
-                            <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
-                            {% endif %}
 
-                            <a class="dropdown-item" href="{% url 'root' %}">Root</a>
-                            <a class="dropdown-item" href="{% url 'home' %}">Home</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'account_login' %}">login</a>
-                            <a class="dropdown-item" href="{% url 'account_logout' %}">logout</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                            <a class="dropdown-item" href="#">Edit profile</a>
-                            <a class="dropdown-item" href="{% url 'account_signup' %}">Signup</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'account_change_password' %}">Change PW skdfsakdfj
-                                dksjfksdfj ksdjfk
-                                sdfjksjd fksdjf ksjdf ksdjfksdjfskjd f</a>
-                        </div>
-                    </li>
-                    {% endif %}
 
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
-                    </li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Jobb
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'timeliste' %}">Timeliste</a>
-                            <a class="dropdown-item" href="{% url 'timerlastmonth' %}">Timeliste Forje Måned</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'jobblist' %}">Jobb Liste</a>
-                            <a class="dropdown-item" href="{% url 'matriell-list' %}">Matriell liste</a>
-                            <a class="dropdown-item" href="{% url 'leverandor-list' %}">leveranør-liste</a>
-                        </div>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+            <ul class="navbar-nav mr-auto">
+
+
+                {% if user.is_staff %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Jobb
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'timeliste' %}">Timeliste</a>
+                        <a class="dropdown-item" href="{% url 'timerlastmonth' %}">Timeliste Forje Måned</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'jobblist' %}">Jobb Liste</a>
+                        <a class="dropdown-item" href="{% url 'matriell-list' %}">Matriell liste</a>
+                        <a class="dropdown-item" href="{% url 'leverandor-list' %}">leveranør-liste</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 {% postman_unread as unread_count %}
+                {% if unread_count %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'postman:inbox' %}">
                         <i class="fas fa-envelope"></i>&nbsp;&nbsp;{% trans "Inbox" %}
-                        {% if unread_count %}
+
                         <strong>({{ unread_count }})</strong></i>
-                        {% endif %}
+
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
+                {% endif %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user"></i>
-                        {% include 'func/name.html' %}</a></li>
+                        {% include 'func/name.html' %}</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                        {% if user.is_staff %}
+                        <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                        {% endif %}
+
+                        <a class="dropdown-item" href="{% url 'root' %}">Root</a>
+                        <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'account_login' %}">login</a>
+                        <a class="dropdown-item" href="{% url 'account_logout' %}">logout</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                        <a class="dropdown-item" href="#">Edit profile</a>
+                        <a class="dropdown-item" href="{% url 'account_signup' %}">Signup</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'account_change_password' %}">Change PW skdfsakdfj
+                            dksjfksdfj ksdjfk
+                            sdfjksjd fksdjf ksjdf ksdjfksdjfskjd f</a>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_logout' %}">
                         <i class="fas fa-sign-out-alt"></i> Logout</a></li>
