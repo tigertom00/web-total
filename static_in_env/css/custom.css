@@ -80,6 +80,10 @@
     padding-top: 1rem !important;
 }
 
+.responsive {
+    max-width: 100%;
+    height: auto;
+}
 
 .jumbotron h2 {
     font-weight: 500;
