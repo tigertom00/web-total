@@ -9,19 +9,12 @@
             <a class="navbar-brand" href="{% url 'root' %}">
                 <img src="{% static 'icons/nxfs-logo.png' %}" width="50" alt="">
             </a>
-
-
-
-
             <ul class="navbar-nav mr-auto">
-
-
                 {% if user.is_staff %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                    <a class="nav-link" href="{% url 'admin:index' %}"><i class="fas fa-tools"></i> Admin</a>
                 </li>
                 {% endif %}
-
                 {% if user.is_authenticated %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -39,7 +32,7 @@
                 </li>
                 {% endif %}
             </ul>
-
+            <!-- ###### Right Side ##### -->
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 {% postman_unread as unread_count %}
@@ -47,9 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'postman:inbox' %}">
                         <i class="fas fa-envelope"></i>&nbsp;&nbsp;{% trans "Inbox" %}
-
                         <strong>({{ unread_count }})</strong></i>
-
                     </a>
                 </li>
                 {% endif %}
@@ -59,30 +50,25 @@
                         <i class="fas fa-user"></i>
                         {% include 'func/name.html' %}</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-
                         {% if user.is_staff %}
-                        <a class="dropdown-item" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fas fa-tools"></i> Admin</a>
                         {% endif %}
-
                         <a class="dropdown-item" href="{% url 'root' %}">Root</a>
-                        <a class="dropdown-item" href="{% url 'home' %}">Home</a>
+                        <a class="dropdown-item" href="{% url 'postman:inbox' %}">
+                            <i class="fas fa-envelope"></i>&nbsp;&nbsp;{% trans "Inbox" %}
+                            {% if unread_count %}
+                            <strong>({{ unread_count }})</strong></i>
+                            {% endif %}
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'account_login' %}">login</a>
-                        <a class="dropdown-item" href="{% url 'account_logout' %}">logout</a>
+                        <a class="dropdown-item" href="{% url 'profile' %}"><i class="fas fa-user-cog"></i> Profile</a>
+
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
-                        <a class="dropdown-item" href="#">Edit profile</a>
-                        <a class="dropdown-item" href="{% url 'account_signup' %}">Signup</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'account_change_password' %}">Change PW skdfsakdfj
-                            dksjfksdfj ksdjfk
-                            sdfjksjd fksdjf ksjdf ksdjfksdjfskjd f</a>
+
+                        <a class="dropdown-item" href="{% url 'account_logout' %}"><i class="fas fa-sign-out-alt"></i>
+                            logout</a>
                     </div>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'account_logout' %}">
-                        <i class="fas fa-sign-out-alt"></i> Logout</a></li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'account_signup' %}">

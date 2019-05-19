@@ -102,7 +102,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 AUTH_USER_MODEL = 'users.CustomUser'
 
 LOGIN_URL = 'account_login'
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'root'
 LOGOUT_REDIRECT_URL = 'root'
 
 # AllAuth
@@ -112,7 +112,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-DEFAULT_FROM_EMAIL = 'Admin <postmaster@nxfs.no>'
+DEFAULT_FROM_EMAIL = 'Nxfs.xyz <postmaster@nxfs.no>'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
