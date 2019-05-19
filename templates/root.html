@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block head_title %}Root{% endblock %}
 {% block content %}
 {% include 'func/modals.html' %}
@@ -6,7 +7,7 @@
     {% include 'func/messages.html' %}
     <div class="jumbotron">
 
-        <h1>YO root!</h1>
+        <center><img src="{% static 'img/working.jpg' %}" alt=""></center>
 
     </div>
 </div>
