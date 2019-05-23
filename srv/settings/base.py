@@ -138,6 +138,7 @@ THUMBNAIL_ALIASES = {
     '': {
         'avatar': {'size': (30, 30), 'crop': True},
         'jobb_thumbs': {'size': (75, 75), 'crop': True},
+        'profile_picture': {'size': (300, 300), 'crop': True},
     },
 }
 

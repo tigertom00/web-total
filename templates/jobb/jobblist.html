@@ -43,7 +43,6 @@ Jobb Liste
                             <th scope="col">Ordre</th>
                             <th scope="col">Tittel</th>
                             <th scope="col">Adresse</th>
-                            <th scope="col">Telefon</th>
                             <th scope="col"></th>
 
                         </tr>
@@ -61,7 +60,6 @@ Jobb Liste
                                 <a href="http://maps.google.com/maps?q={{ jobber.adresse }}"
                                     target="_blank">{{ jobber.adresse }}</a>
                             </td>
-                            <td>{{ jobber.telefon_nr }}</td>
                             <td><a href="{% url 'delete_jobber' jobber.ordre_nr %}" class="confirm-delete"
                                     data-toggle="modal" data-target="#confirmTimerDeleteModal"
                                     id="deleteButton{{jobber.ordre_nr}}">

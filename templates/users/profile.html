@@ -13,7 +13,7 @@
         <div class="card-body round-image">
 
             <h5 class="m-0">{{ user.username }}</h5>
-            <img src="{{ user.profile_picture|thumbnail_url:'avatar' }}"    >
+            <img src="{{ user.profile_picture|thumbnail_url:'profile_picture' }}"    >
             <p>First Name: {{ user.first_name }}</p>
             <p>Last Name: {{ user.last_name }}</p>
             <p>E-Mail: {{ user.email }}</p>
