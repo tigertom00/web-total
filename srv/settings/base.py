@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'flatpickr',
-    'imagekit',
+    'easy_thumbnails',
     'bootstrap_modal_forms',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
@@ -130,6 +130,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         }
     }
+}
+
+# Easy Thumbnail
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (30, 30), 'crop': True},
+        'jobb_thumbs': {'size': (75, 75), 'crop': True},
+    },
 }
 
 # Postman

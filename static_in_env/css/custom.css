@@ -86,6 +86,10 @@
   height: auto;
 }
 
+.round-image img {
+  border-radius: 50%;
+}
+
 .jumbotron h2 {
   font-weight: 500;
   font-size: 35px;

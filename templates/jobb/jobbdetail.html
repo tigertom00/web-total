@@ -6,6 +6,7 @@
 {% block content %}
 {% load crispy_forms_tags %}
 {% load customtags %}
+{% load thumbnail %}
 {% include 'func/modals.html' %}
 <div class="container">
     {% include 'func/messages.html' %}
@@ -130,7 +131,7 @@
             </div>
             <div class="p-2 list-group-custom list-group-item-custom">
                 {% for img in bilder %}
-                <a href="{{ img.image.url }}"><img src="{{ img.image_thumbnail.url }}" alt=""></a>&ensp;&ensp;
+                <a href="{{ img.image.url }}"><img src="{{ img.image|thumbnail_url:'jobb_thumbs' }}" alt=""></a>&ensp;&ensp;
                 {% endfor %}
             </div>
             {% endif %}
