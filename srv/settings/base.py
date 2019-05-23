@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'flatpickr',
+    'imagekit',
     'bootstrap_modal_forms',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',

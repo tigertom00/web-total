@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 from matriell.models import Matriell
@@ -64,6 +66,10 @@ class JobbImage(models.Model):
     jobb = models.ForeignKey(Jobber, default=None, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='jobbimages',
                               verbose_name='Image')
+    image_thumbnail = ImageSpecField(source='image',
+                                     processors=[ResizeToFill(100, 50)],
+                                     format='JPEG',
+                                     options={'quality': 60})
     # TODO: Define fields here
 
     class Meta:
