@@ -29,7 +29,7 @@
             <i class="fas fa-trash-alt" tooltip-toggle="tooltip" title="Delete"></i></a>&ensp;&ensp;
         <a href="{% url 'editjobb' jobb.ordre_nr %}"><i class="fas fa-edit" tooltip-toggle="tooltip"
                 title="Edit"></i></a>
-        <div class="d-flex justify-content-between">
+        <div class="d-flex flex-column-sm justify-content-between">
             <div class="p-2">
                 <p><img src="{{ jobb.profile_picture.url }}" alt=""></p>
                 <ul class="list-group list-group-custom">
