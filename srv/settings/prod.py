@@ -1,4 +1,12 @@
 from .base import *
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+
+sentry_sdk.init(
+    dsn=config('S_DSN'),
+    integrations=[DjangoIntegration()]
+)
 
 SECRET_KEY = config('SECRET_KEY')
 
