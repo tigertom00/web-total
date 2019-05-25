@@ -1,15 +1,22 @@
-  <footer>
+  <footer class="custom-h2">
       <div class="bsa-ad mt-5">
           <div class="container text-center">
-              <p class="lead">And now, a word from our sponsors...</p>
+
               <div class="row">
                   <div class="col-lg-8 col-md-10 mx-auto">
                       <div class="bsa-cpc">
                           <div class="default-text">
-                              <span class="default-title">Lorem ipsum 50</span>
-                              <span class="default-description">
-                                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                              </span>
+                              <h2 class="custom-h2">Weather in {{ weather.city|title }}</h2>
+                              <div class="card border-0 shadow bg-dark custom-card mb-2">
+                                  <div class="card-body">
+
+                                      <center>
+                                          <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png">
+                                          <b> {{ weather.temp|floatformat:1 }} &deg;c</b>
+                                          <p class="card-text"><b>{{ weather.description|title }}</b></p>
+                                      </center>
+                                  </div>
+                              </div>
                           </div>
                       </div>
                   </div>

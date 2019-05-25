@@ -46,6 +46,11 @@
                     </li>
                     {% endif %}
                 </ul>
+
+
+
+
+
             </div>
 
 
@@ -131,7 +136,8 @@
             </div>
             <div class="p-2 list-group-custom list-group-item-custom">
                 {% for img in bilder %}
-                <a href="{{ img.image.url }}"><img src="{{ img.image|thumbnail_url:'jobb_thumbs' }}" alt=""></a>&ensp;&ensp;
+                <a href="{{ img.image.url }}"><img src="{{ img.image|thumbnail_url:'jobb_thumbs' }}"
+                        alt=""></a>&ensp;&ensp;
                 {% endfor %}
             </div>
             {% endif %}
@@ -147,5 +153,9 @@
             </div>
         </div>
     </div>
+
+
+
+
 </div>
 {% endblock content %}

@@ -3,6 +3,7 @@
   padding: 0;
 }
 
+
 .dropdown-login {
   min-width: 250px !important;
 }
@@ -102,6 +103,30 @@
 .jumbotron h2::after {
   background: #b58900;
   width: 175px;
+  height: 2px;
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  transform: translateX(-0%);
+  -o-transform: translateX(-0%);
+  -ms-transform: translateX(-0%);
+  -moz-transform: translateX(-0%);
+  -webkit-transform: translateX(-0%);
+}
+
+.custom-h2 h2 {
+  font-weight: 500;
+  font-size: 35px;
+  text-align: center;
+  position: relative;
+  padding: 0px 0 5px;
+  margin-bottom: 10px;
+}
+
+.custom-h2 h2::after {
+  background: #b58900;
+  width: 100%;
   height: 2px;
   content: "";
   position: absolute;
