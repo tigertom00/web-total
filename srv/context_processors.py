@@ -4,9 +4,8 @@ from commands.city_weather import city_weather
 
 def custom_context(request):
     navbarloginform = LoginForm(request.POST or None)
-    weather = city_weather
 
     return {
-        'weather': weather,
+        'weather': city_weather,
         'navbarloginform': navbarloginform
     }
