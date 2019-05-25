@@ -1,4 +1,4 @@
-  <footer class="custom-h2">
+  <footer class="custom-h3">
       <div class="bsa-ad mt-5">
           <div class="container text-center">
 
@@ -6,10 +6,10 @@
                   <div class="col-lg-8 col-md-10 mx-auto">
                       <div class="bsa-cpc">
                           <div class="default-text">
-                              <h2 class="custom-h2">Weather in {{ weather.city|title }}</h2>
-                              <div class="card border-0 shadow bg-dark custom-card mb-2">
-                                  <div class="card-body">
 
+                              <div class="card border-0 shadow bg-dark mb-2">
+                                  <div class="card-body">
+                                      <h3 class="custom-h3">Weather in {{ weather.city|title }}</h3>
                                       <center>
                                           <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png">
                                           <b> {{ weather.temp|floatformat:1 }} &deg;c</b>
