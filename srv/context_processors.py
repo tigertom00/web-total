@@ -6,6 +6,6 @@ def custom_context(request):
     navbarloginform = LoginForm(request.POST or None)
 
     return {
-        'weather': city_weather,
+        'weather': lambda: city_weather,
         'navbarloginform': navbarloginform
     }
