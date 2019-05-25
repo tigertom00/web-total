@@ -1,11 +1,11 @@
 from allauth.account.forms import LoginForm
-from commands.city_weather import city_weather
+from commands import city_weather
 
 
 def custom_context(request):
     navbarloginform = LoginForm(request.POST or None)
 
     return {
-        'weather': lambda: city_weather,
+        'weather': city_weather.city_weather,
         'navbarloginform': navbarloginform
     }
