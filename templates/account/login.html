@@ -3,7 +3,7 @@
 {% load static i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block head_title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
 {% load crispy_forms_tags %}
@@ -17,7 +17,7 @@
 
       <div class="card-body ml-4 mr-4">
 
-        <h3>{% trans "Sign In" %}</h3>
+        <h2>{% trans "Login" %}</h2>
 
 
 
@@ -28,7 +28,7 @@
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
           {% endif %}
-          <button class="btn btn-success btn-lg btn-block mt-3" type="submit">{% trans "Sign In" %}</button>
+          <button class="btn btn-primary btn-lg btn-block mt-3" type="submit">{% trans "Sign In" %}</button>
         </form>
         <div class="custom-login-box">
           Or Login With

@@ -18,7 +18,7 @@
 .card-body h2 {
   font-weight: 500;
   font-size: 35px;
-  text-align: left;
+  text-align: center;
   position: relative;
   padding: 0px 0 5px;
   margin-bottom: 10px;
@@ -26,12 +26,13 @@
 
 .card-body h2::after {
   background: #b58900;
-  width: 175px;
+  width: 80%;
   height: 2px;
   content: "";
   position: absolute;
-  top: 100%;
-  left: 0%;
+  top: 110%;
+  left: 10%;
+  align-self: center;
   transform: translateX(-0%);
   -o-transform: translateX(-0%);
   -ms-transform: translateX(-0%);
@@ -282,7 +283,17 @@
 .form-group input[type="file"] {
   margin-top: 1px !important;
 }
-
+.form-group input[type="checkbox"] {
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.5);
+  padding: 10px;
+}
+.form-check-label {
+  position: relative;
+}
 .form-group id {
   background: #b58900 !important;
 }
