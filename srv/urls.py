@@ -7,7 +7,7 @@ from . import views
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('administrator/', admin.site.urls),
     path('', views.root, name='root'),
     path('messages/', include('postman.urls', namespace='postman')),
     path('accounts/', include('allauth.urls')),

@@ -17,16 +17,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
-    'postman',
-    # 'ajax_select',
-    # 'notification',
-    # 'mailer',
+
     'testing',
     'users',
     'jobb',
     'timelister',
     'matriell',
     'members',
+
+    'postman',
+    # 'ajax_select',
+    # 'notification',
+    # 'mailer',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -34,7 +36,6 @@ INSTALLED_APPS = [
     'flatpickr',
     'easy_thumbnails',
     'bootstrap_modal_forms',
-    'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.google',
 ]
 
@@ -113,7 +114,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
 )
-DEFAULT_FROM_EMAIL = 'Nxfs.xyz <postmaster@nxfs.no>'
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
