@@ -91,10 +91,12 @@
                             {% if redirect_field_value %}
                             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
                             {% endif %}
-                            <button type="submit" class="btn btn-primary">{% trans "Sign In" %}</button>
-                            <button type="button" class="btn btn-secondary float-right"><i
-                                    class="fab fa-github pr-2"></i>
-                                github</small></button>
+                            <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
+                            <a href="/accounts/google/login/?process=login" type="button"
+                                class="btn btn-info btn-google float-right">
+                                <img src="{% static 'icons/32px-Google__G__Logo.svg.png' %}" alt="">
+                                &nbsp;Google</a>
+
                         </div>
                     </form>
                 </li>

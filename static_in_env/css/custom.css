@@ -3,7 +3,6 @@
   padding: 0;
 }
 
-
 .dropdown-login {
   min-width: 250px !important;
 }
@@ -162,7 +161,14 @@
   -moz-transform: translateX(-0%);
   -webkit-transform: translateX(-0%);
 }
+.btn-google {
+  background: white !important;
+  color: #444 !important;
+}
 
+.btn-google img {
+  height: 20px !important;
+}
 .jobb-bilder select {
   display: none !important;
 }
@@ -259,7 +265,6 @@
 .form-detail .form-row-last input {
   padding: 14px;
 }
-
 
 .form-control[readonly] {
   background-color: #a9bdbd !important;
