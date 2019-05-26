@@ -12,7 +12,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['nxfs.xyz']
+ALLOWED_HOSTS = ['nxfs.xyz', 'www.nxfs.xyz', '139.59.214.107']
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
