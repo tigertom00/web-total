@@ -12,16 +12,8 @@
   <div class="col-lg-6 col-md-8 mx-auto custom-h3">
     {% include 'func/messages.html' %}
     <div class="card border-0 shadow bg-dark mb-5">
-
-
-
       <div class="card-body ml-4 mr-4">
-
         <h2>{% trans "Login" %}</h2>
-
-
-
-
         <form class="form-group mt-4 form-group-login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
           {{ form|crispy }}
@@ -31,8 +23,7 @@
           <button class="btn btn-primary btn-lg btn-block mt-3" type="submit">{% trans "Sign In" %}</button>
         </form>
         <div class="custom-login-box">
-          <center>
-            Or Login With</center>
+          <center>Or Login With</center>
         </div>
         <a href="/accounts/google/login/?process=login" type="button" class="btn btn-info btn-google btn-lg btn-block">
           <img src="{% static 'icons/32px-Google__G__Logo.svg.png' %}" alt="">

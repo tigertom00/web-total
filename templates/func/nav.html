@@ -83,20 +83,24 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-sign-in-alt"></i> Login
                     </a>
-                    <form class="dropdown-menu p-3 dropdown-menu-right dropdown-login" method="POST"
+                    <form class="dropdown-menu form-group p-3 dropdown-menu-right dropdown-login" method="POST"
                         action="{% url 'account_login' %}">
-                        <div class="form-group">
-                            {% csrf_token %}
-                            {{ navbarloginform|crispy }}
-                            {% if redirect_field_value %}
-                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-                            {% endif %}
-                            <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
-                            <a href="/accounts/google/login/?process=login" type="button"
-                                class="btn btn-info btn-google float-right">
-                                <img src="{% static 'icons/32px-Google__G__Logo.svg.png' %}" alt="">
-                                &nbsp;Google</a>
 
+                        {% csrf_token %}
+                        {{ navbarloginform|crispy }}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <button type="submit" class="btn btn-primary btn-block mt-2 mb-2">{% trans "Login" %}</button>
+
+                        <center><b>Or signin With</b></center>
+                        <a href="/accounts/google/login/?process=login" type="button"
+                            class="btn btn-info btn-google btn-block mt-2">
+                            <img src="{% static 'icons/32px-Google__G__Logo.svg.png' %}" alt="">
+                            &nbsp;Google</a>
+                        <div class="mt-2 text-center">
+                            <a href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
                         </div>
                     </form>
                 </li>
