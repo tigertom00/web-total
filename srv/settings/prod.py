@@ -33,8 +33,8 @@ DATABASES = {
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'Nxfs <website@nxfs.xyz>'
-EMAIL_HOST = 'smtp.zoho.eu'
-EMAIL_PORT = 465
-EMAIL_HOST_USER = config('ZOHO_USER')
-EMAIL_HOST_PASSWORD = config('ZOHO_PASSWORD')
-EMAIL_USE_SSL = True
+EMAIL_HOST = config('EMAIL_H')
+EMAIL_PORT = 25
+EMAIL_HOST_USER = config('EMAIL_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
+EMAIL_USE_SSL = False
