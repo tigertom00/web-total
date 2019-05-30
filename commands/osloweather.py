@@ -1,12 +1,13 @@
-import requests
+from requests import get
+from decouple import config
 
 # Get Weather for Oslo/Norway
-api_key = '8393000909b9dd8e49aca1ca05c5c6bd'
+api_key = config('W_APIKEY')
 url = 'http://api.openweathermap.org/data/2.5/weather?q={}&units={}&appid={}'
 city = 'Oslo'
 units = 'Metric'
 
-response = requests.get(url.format(city, units, api_key)).json()
+response = get(url.format(city, units, api_key)).json()
 
 # Make dictionary
 city_weather = {
