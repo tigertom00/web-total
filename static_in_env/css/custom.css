@@ -150,18 +150,19 @@
 
 .custom-h3 h3::after {
   background: #b58900;
-  width: 100%;
+  width: 80%;
   height: 2px;
   content: "";
   position: absolute;
-  top: 100%;
-  left: 0%;
+  top: 110%;
+  left: 10%;
   transform: translateX(-0%);
   -o-transform: translateX(-0%);
   -ms-transform: translateX(-0%);
   -moz-transform: translateX(-0%);
   -webkit-transform: translateX(-0%);
 }
+
 .btn-google {
   background: white !important;
   color: #444 !important;
@@ -170,6 +171,7 @@
 .btn-google img {
   height: 20px !important;
 }
+
 .jobb-bilder select {
   display: none !important;
 }
@@ -283,17 +285,24 @@
 .form-group input[type="file"] {
   margin-top: 1px !important;
 }
+
 .form-group input[type="checkbox"] {
-  -ms-transform: scale(1.5); /* IE */
-  -moz-transform: scale(1.5); /* FF */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
-  -o-transform: scale(1.5); /* Opera */
+  -ms-transform: scale(1.5);
+  /* IE */
+  -moz-transform: scale(1.5);
+  /* FF */
+  -webkit-transform: scale(1.5);
+  /* Safari and Chrome */
+  -o-transform: scale(1.5);
+  /* Opera */
   transform: scale(1.5);
   padding: 10px;
 }
+
 .form-check-label {
   position: relative;
 }
+
 .form-group id {
   background: #b58900 !important;
 }
@@ -330,11 +339,13 @@
   font-size: 18px;
   padding: 0px;
 }
+
 .form-group-login label {
   margin-bottom: 10px !important;
   margin-top: 20px !important;
   font-weight: bold !important;
 }
+
 .custom-login-box {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -342,6 +353,7 @@
   font-size: 18px;
   font-weight: bold;
 }
+
 /* .col-form-label {
     display: none;
 } */
