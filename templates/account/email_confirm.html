@@ -1,39 +1,37 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
 {% load account %}
-
 {% block head_title %}{% trans "Confirm E-mail Address" %}{% endblock %}
-
-
 {% block content %}
 {% include 'func/modals.html' %}
 <div class="container">
-    {% include 'func/messages.html' %}
-    <div class="jumbotron">
-        <h1>{% trans "Confirm E-mail Address" %}</h1>
-
-        {% if confirmation %}
-
-        {% user_display confirmation.email_address.user as user_display %}
-
-        <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a
-                href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
-            {{ user_display }}.{% endblocktrans %}</p>
-
-        <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-success button-main">{% trans 'Confirm' %}</button>
-        </form>
-
-        {% else %}
-
-        {% url 'account_email' as email_url %}
-
-        <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a
-                new e-mail confirmation request</a>.{% endblocktrans %}</p>
-
-        {% endif %}
+    <div class="col-lg-6 col-md-8 mx-auto custom-h3">
+        {% include 'func/messages.html' %}
+        <div class="card border-0 shadow bg-dark mb-5">
+            <div class="card-body ml-4 mr-4">
+                <h2>{% trans "Confirm E-mail Address" %}</h2>
+                {% if confirmation %}
+                <div class="custom-login-box mb-1 mt-4">
+                    {% user_display confirmation.email_address.user as user_display %}
+                    {% blocktrans with confirmation.email_address.email as email %}Please confirm that <a
+                        href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user
+                    {{ user_display }}.{% endblocktrans %}
+                </div>
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                        class="btn btn-primary btn-lg btn-block mt-5 mb-3">{% trans 'Confirm' %}</button>
+                </form>
+                {% else %}
+                {% url 'account_email' as email_url %}
+                <div class="custom-login-box mb-1 mt-4">
+                    {% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a
+                        href="{{ email_url }}">issue a
+                        new e-mail confirmation request</a>.{% endblocktrans %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

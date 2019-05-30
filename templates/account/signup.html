@@ -1,28 +1,36 @@
 {% extends "account/base.html" %}
-
-{% load i18n %}
-
+{% load static i18n %}
 {% block head_title %}{% trans "Signup" %}{% endblock %}
-
 {% block content %}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
+
 <div class="container">
-  {% include 'func/messages.html' %}
-  <div class="jumbotron">
-    <h1>{% trans "Sign Up" %}</h1>
 
-    <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
-    </p>
+  <div class="col-lg-6 col-md-8 mx-auto custom-h3">
+    {% include 'func/messages.html' %}
+    <div class="card border-0 shadow bg-dark mb-5">
+      <div class="card-body ml-4 mr-4">
+        <h2>{% trans "Sign Up" %}</h2>
 
-    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
-      {% csrf_token %}
-      {{ form|crispy }}
-      {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-      {% endif %}
-      <button type="submit" class="btn btn-success button-main">{% trans "Sign Up" %} &raquo;</button>
-    </form>
+
+
+        <form class="form-group mt-4 form-group-login" id="signup_form" method="post"
+          action="{% url 'account_signup' %}">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button type="submit" class="btn btn-primary btn-lg btn-block mt-5 mb-3">{% trans "Sign Up" %}</button>
+          <div class="custom-login-box mb-1">
+            {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign
+              in</a>.{% endblocktrans %}
+
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

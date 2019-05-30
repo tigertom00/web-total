@@ -1,19 +1,18 @@
 {% extends "account/base.html" %}
-
 {% load static i18n %}
 {% load account socialaccount %}
-
 {% block head_title %}{% trans "Login" %}{% endblock %}
-
 {% block content %}
 {% load crispy_forms_tags %}
 {% include 'func/modals.html' %}
+
 <div class="container">
   <div class="col-lg-6 col-md-8 mx-auto custom-h3">
     {% include 'func/messages.html' %}
     <div class="card border-0 shadow bg-dark mb-5">
       <div class="card-body ml-4 mr-4">
         <h2>{% trans "Login" %}</h2>
+
         <form class="form-group mt-4 form-group-login" method="POST" action="{% url 'account_login' %}">
           {% csrf_token %}
           {{ form|crispy }}

@@ -1,26 +1,26 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
-
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
-
 {% block content %}
 {% include 'func/modals.html' %}
 <div class="container">
-  {% include 'func/messages.html' %}
-  <div class="jumbotron">
-    <h1>{% trans "Sign Out" %}</h1>
-
-    <p>{% trans 'Are you sure you want to sign out?' %}</p>
-
-    <form method="post" action="{% url 'account_logout' %}">
-      {% csrf_token %}
-      {% if redirect_field_value %}
-      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-      {% endif %}
-      <button type="submit" class="btn btn-success button-main">{% trans 'Sign Out' %}</button>
-    </form>
+  <div class="col-lg-6 col-md-8 mx-auto custom-h3">
+    {% include 'func/messages.html' %}
+    <div class="card border-0 shadow bg-dark mb-5">
+      <div class="card-body ml-4 mr-4">
+        <h2>{% trans "Sign Out" %}</h2>
+        <div class="custom-login-box mt-4">
+          {% trans 'Are you sure you want to sign out?' %}
+        </div>
+        <form method="post" action="{% url 'account_logout' %}">
+          {% csrf_token %}
+          {% if redirect_field_value %}
+          <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+          {% endif %}
+          <button type="submit" class="btn btn-primary btn-lg btn-block mt-4 mb-3">{% trans 'Sign Out' %}</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
-
 {% endblock %}
