@@ -1,4 +1,4 @@
-# Djano Webserver Timelister
+# Django Webserver Timelister
 
 Website with "Timeliste Registration"
 
