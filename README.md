@@ -1,21 +1,14 @@
-# Project Title
+# Djano Webserver Timelister
 
 Website with "Timeliste Registration"
 
-## Getting Started
-
-To run on local django server (port: 8000):
-
 ### Prerequisites
-
-What things you need to install the software and how to install them
 
 You need git and python3 installed.
 
 ### Installing
 
-Make a new project folder then install virtualenv and activate it:
-(windows:)
+Make a new project folder then install virtualenv and activate it (windows):
 
 ```
 mkdir myproject
@@ -59,7 +52,11 @@ python manage.py runserver
 
 ## Deployment
 
+---
+
 ## Built With
+
+---
 
 ## Authors
 
