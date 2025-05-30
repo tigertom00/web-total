@@ -1,32 +1,34 @@
 <footer>
     <div class="container">
-        <div class="col-lg-6 col-md-8 mx-auto custom-h3">
-            <div class="card border-0 shadow bg-dark mb-5">
-                <div class="card-body ml-4 mr-4">
-                    <h3>Weather in {{ weather.city|title }}</h3>
-                    <center>
-                        <img src="https://openweathermap.org/img/w/{{ weather.icon }}.png">
-                        <b> {{ weather.temp|floatformat:1 }} &deg;c</b>
-                        <p class="card-text"><b>{{ weather.description|title }}</b></p>
-                    </center>
+        <div class="row">
+            <div class="col-lg-6 col-md-8 mx-auto custom-h3">
+                <div class="card border-0 shadow bg-dark mb-4">
+                    <div class="card-body ml-4 mr-4">
+                        <h3>Weather in {{ weather.city|title }}</h3>
+                        <center>
+                            <img src="https://openweathermap.org/img/w/{{ weather.icon }}.png">
+                            <b> {{ weather.temp|floatformat:1 }} &deg;c</b>
+                            <p class="card-text"><b>{{ weather.description|title }}</b></p>
+                        </center>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="footer-social my-5">
-        <div class="container">
-            <div class="d-flex justify-content-center">
-                <a href="#top"> Back to the top</a>
+        <div class="footer-social my-4">
+            <div class="container">
+                <div class="d-flex justify-content-center">
+                    <a href="#top"> Back to the top</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="footer-main bg-dark py-5">
-        <div class="container">
-            Made By<a href="#"> Tomas Hoff</a>
-            <br>
-            <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
-                    href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
-                    href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+        <div class="footer-main bg-dark py-5 shadow">
+            <div class="container">
+                Made By<a href="#"> Tomas Hoff</a>
+                <br>
+                <p>Based on <a href="https://getbootstrap.com/" rel="nofollow">Bootstrap</a>. Icons from <a
+                        href="https://fontawesome.com/" rel="nofollow">Font Awesome</a>. Web fonts from <a
+                        href="https://fonts.google.com/" rel="nofollow">Google</a>.</p>
+            </div>
         </div>
     </div>
 </footer>

@@ -26,15 +26,19 @@
   {% include 'func/nav.html' %}
   <header class="masthead masthead-page mb-2">
     <div class="container">
-      <div class="col-lg-6 col-md-8 mx-auto py-4 text-center">
-        {% block header %}
-        {% endblock header %}
+      <div class="row">
+        <div class="col-lg-6 col-md-8 mx-auto py-4 text-center">
+          {% block header %}
+          {% endblock header %}
+        </div>
       </div>
     </div>
   </header>
   <main>
-    {% block content %}
-    {% endblock content %}
+    <div class="row">
+      {% block content %}
+      {% endblock content %}
+    </div>
   </main>
   {% include 'func/footer.html' %}
   {% include 'func/scripts.html' %}
